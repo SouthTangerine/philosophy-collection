@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生平时代 · 萨特哲学导读</title>
+<style>
+:root{
+  --bg:#faf8f5; --bg2:#f4f1ec;
+  --ink:#2b2b2b; --ink-soft:#5a5a5a; --ink-dim:#8a8a8a;
+  --accent:#5a6b5a; --accent-light:#6a7c6a; --accent-dark:#3a4a3a;
+  --line:rgba(90,107,90,.18); --line-dim:rgba(90,107,90,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif;
+  background:var(--bg);color:var(--ink);
+  line-height:1.85;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:860px;margin:0 auto;padding:0 28px;}
+
+/* 导航 */
+nav.top{
+  position:sticky;top:0;z-index:50;
+  background:rgba(250,248,245,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line-dim);
+}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px;flex-wrap:wrap;gap:8px;}
+.brand{font-weight:700;letter-spacing:.16em;font-size:.88rem;color:var(--accent-dark);text-decoration:none;}
+nav.top ul{display:flex;gap:2px;list-style:none;flex-wrap:wrap;}
+nav.top ul a{
+  text-decoration:none;color:var(--ink-soft);
+  font-size:.76rem;padding:6px 12px;border-radius:4px;
+  transition:background .2s,color .2s;letter-spacing:.05em;
+}
+nav.top ul a:hover{background:rgba(90,107,90,.12);color:var(--accent-dark);}
+nav.top ul a.active{color:var(--accent-dark);font-weight:600;}
+
+/* 页头 */
+header.page-head{padding:60px 0 36px;text-align:center;}
+.page-head .eyebrow{font-size:.76rem;letter-spacing:.4em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;}
+.page-head h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;letter-spacing:.06em;color:var(--ink);}
+.page-head .sub{margin-top:16px;font-size:.94rem;color:var(--ink-soft);max-width:560px;margin-left:auto;margin-right:auto;}
+
+/* 时间线 */
+.timeline{position:relative;padding:20px 0 10px;}
+.timeline::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--line);}
+.tl-item{position:relative;padding-left:50px;margin-bottom:36px;}
+.tl-item::before{
+  content:"";position:absolute;left:13px;top:6px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--accent);border:2px solid var(--bg);
+}
+.tl-item .tl-year{
+  display:inline-block;font-size:.82rem;font-weight:700;
+  color:var(--accent);letter-spacing:.06em;margin-bottom:6px;
+}
+.tl-item h4{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.tl-item p{font-size:.9rem;color:var(--ink-soft);line-height:1.85;}
+
+/* 关系区块 */
+.relation-section{padding:40px 0 16px;scroll-margin-top:70px;}
+.relation-section h2{
+  font-size:clamp(1.2rem,3vw,1.6rem);font-weight:800;color:var(--ink);
+  letter-spacing:.04em;margin-bottom:20px;
+}
+.relation-section h2::before{content:"● ";color:var(--accent);font-size:.8rem;}
+.rel-card{
+  background:var(--bg2);border-radius:8px;padding:22px 26px;margin-bottom:16px;
+}
+.rel-card h4{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.rel-card .rel-en{font-size:.78rem;color:var(--ink-dim);font-style:italic;margin-bottom:10px;}
+.rel-card p{font-size:.9rem;color:var(--ink-soft);line-height:1.85;}
+
+/* 时代背景 */
+.era-section{padding:40px 0 16px;scroll-margin-top:70px;}
+.era-section h2{
+  font-size:clamp(1.2rem,3vw,1.6rem);font-weight:800;color:var(--ink);
+  letter-spacing:.04em;margin-bottom:20px;
+}
+.era-section h2::before{content:"● ";color:var(--accent);font-size:.8rem;}
+.era-block{margin-bottom:24px;}
+.era-block h4{font-size:.98rem;font-weight:700;color:var(--ink);margin-bottom:10px;}
+.era-block p{font-size:.9rem;color:var(--ink-soft);line-height:1.85;margin-bottom:10px;text-indent:2em;}
+
+/* 页脚 */
+footer{padding:46px 0 36px;text-align:center;border-top:1px solid var(--line-dim);margin-top:40px;}
+footer p{font-size:.82rem;color:var(--ink-dim);letter-spacing:.06em;}
+
+/* 回到顶部 */
+.to-top{position:fixed;right:26px;bottom:30px;width:44px;height:44px;background:var(--accent);color:var(--bg);border:none;border-radius:6px;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s;z-index:60;}
+.to-top.show{opacity:1;pointer-events:auto;}
+
+/* 动画 */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* 移动端 */
+@media(max-width:640px){
+  .wrap{padding:0 20px;}
+  nav.top .wrap{justify-content:center;}
+  nav.top ul{justify-content:center;}
+  .timeline::before{left:14px;}
+  .tl-item{padding-left:38px;}
+  .tl-item::before{left:9px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">萨特导读</a>
+    <ul>
+      <li><a href="index.html">主页</a></li>
+      <li><a href="concepts.html">核心概念</a></li>
+      <li><a href="works.html">著作导读</a></li>
+      <li><a href="life.html" class="active">生平时代</a></li>
+      <li><a href="reads.html">名言阅读</a></li>
+      <li><a href="../index.html">合集</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <div class="eyebrow">LIFE & ERA</div>
+    <h1>生平与时代</h1>
+    <p class="sub">萨特的一生横跨二十世纪大部分——两次大战、冷战、去殖民化、1968年风暴。他的哲学与时代深度交织，理解生平有助于理解他为什么提出这些概念。</p>
+  </div>
+</header>
+
+<section class="reveal" style="padding:20px 0;">
+  <div class="wrap">
+    <div class="timeline">
+      <div class="tl-item">
+        <span class="tl-year">1905</span>
+        <h4>出生于巴黎</h4>
+        <p>6月21日生于巴黎。父亲是海军军官，在萨特一岁时去世。母亲带着他回到外祖父家——这段与外公共同生活的童年后来在自传《词语》中详述。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1915–1929</span>
+        <h4>求学</h4>
+        <p>进入巴黎亨利四世中学，后转入路易大帝中学。1924年考入巴黎高等师范学院（ENS）。1929年以第一名通过哲学教师资格会考，波伏娃第二名。此后两人保持终身伴侣关系，不结婚，维持"必然的"关系。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1931–1934</span>
+        <h4>勒阿弗尔与柏林</h4>
+        <p>1931年起在勒阿弗尔中学教哲学。1933年获奖学金赴柏林法兰西学院学习胡塞尔现象学——这在理解上成为《存在与虚无》的哲学起点。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1938</span>
+        <h4>《恶心》出版</h4>
+        <p>第一部小说《恶心》在伽利玛出版社出版，受到好评。加缪后来称赞它。小说把哲学体验融入文学，奠定了萨特"用文学表达哲学"的方法。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1939–1941</span>
+        <h4>战争与被俘</h4>
+        <p>1939年应征入伍，1940年在洛林前线被德军俘虏，关押在特里尔战俘营。在营中开始构思《存在与虚无》。1941年获释返回巴黎，继续教书并参与抵抗运动。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1943</span>
+        <h4>《存在与虚无》出版</h4>
+        <p>哲学主著《存在与虚无》在德军占领下的巴黎出版。同年首演戏剧《苍蝇》。萨特在占领期间参与了抵抗组织。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1944–1946</span>
+        <h4>战后盛名</h4>
+        <p>巴黎解放后，萨特迅速成为法国知识界的核心人物。《禁闭》1944年首演。1945年创办《现代》杂志。1945年发表《存在主义是一种人道主义》演讲，存在主义成为公众话题。1945—1949年出版《自由之路》三部曲。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1948–1954</span>
+        <h4>与加缪决裂</h4>
+        <p>萨特与加缪曾是抵抗运动战友，但1952年围绕苏联问题公开论战、决裂。这是法国知识界的大事件——两位存在主义者的分手象征着左翼内部的分裂。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1956–1962</span>
+        <h4>匈牙利与阿尔及利亚</h4>
+        <p>1956年苏联入侵匈牙利，萨特公开谴责——与苏联关系的重要转折。阿尔及利亚独立战争中，萨特支持独立，签署"121人宣言"。1960年出版《辩证理性批判》。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1964</span>
+        <h4>拒绝诺贝尔奖</h4>
+        <p>被授予诺贝尔文学奖，萨特拒绝——理由是把作家不应被任何机构"体制化"，接受奖项等于承认一个"评判者"。这一行为体现了他"拒绝外在定义"的一贯立场。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1968</span>
+        <h4>五月风暴</h4>
+        <p>法国"五月风暴"爆发，萨特支持学生运动，在《新观察家》发表文章，在街头散发传单。他的姿态体现了知识分子"介入"的典范。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1970s</span>
+        <h4>晚年</h4>
+        <p>1971年出版三卷本《福楼拜传》。晚年视力急剧下降，几乎失明，但仍参与公共事务。1979年为越南船民请愿时，与雷蒙·阿隆握手言和。</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">1980</span>
+        <h4>去世</h4>
+        <p>4月15日在巴黎去世，享年74岁。葬礼在蒙帕纳斯公墓举行——五万人自发参加送葬，是法国自雨果葬礼以来最大规模的作家葬礼。波伏娃在《告别仪式》中记录了萨特最后的岁月。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="relation-section reveal">
+  <div class="wrap">
+    <h2>关键人物关系</h2>
+    <div class="rel-card">
+      <h4>西蒙娜·德·波伏娃</h4>
+      <div class="rel-en">Simone de Beauvoir, 1908–1986</div>
+      <p>萨特终身伴侣，存在主义哲学家和作家。《第二性》（1949）是女性主义哲学的奠基之作。两人的关系以"必然的"为核心——互相是对方思想的第一读者和批评者——同时允许"偶然的"情人存在。波伏娃在《告别仪式》中记录了萨特最后的岁月。</p>
+    </div>
+    <div class="rel-card">
+      <h4>阿尔贝·加缪</h4>
+      <div class="rel-en">Albert Camus, 1913–1960</div>
+      <p>抵抗运动中的战友，1952年公开决裂。分歧的核心是政治：萨特认为历史有方向，可以为了未来支持暴力；加缪认为没有一种目的可以证明手段正当。加缪的《反抗者》（1951）引发了论战。萨特晚年表示后悔——不是后悔立场，而是后悔论战的尖锐。</p>
+    </div>
+    <div class="rel-card">
+      <h4>莫里斯·梅洛-庞蒂</h4>
+      <div class="rel-en">Maurice Merleau-Ponty, 1908–1961</div>
+      <p>ENS同学，现象学家。早期与萨特合作编辑《现代》杂志。梅洛-庞蒂的《知觉现象学》（1945）对萨特有深刻影响。两人分歧在于身体与意识的关系。1953年因朝鲜战争的政治立场分歧决裂。梅洛-庞蒂英年早逝，萨特在纪念文章中称他是"我们这一代最有价值的哲学家"。</p>
+    </div>
+    <div class="rel-card">
+      <h4>雷蒙·阿隆</h4>
+      <div class="rel-en">Raymond Aron, 1905–1983</div>
+      <p>ENS同学，自由主义政治哲学家。两人在政治立场上长期对立，但在知识上互相尊重。1979年，在为越南船民请愿的活动上，两位老人握手言和——被媒体称为"历史性和解"；阿隆在回忆录中回忆这一幕时说，自己更多是出于对萨特失明与衰老的同情。</p>
+    </div>
+    <div class="rel-card">
+      <h4>胡塞尔与海德格尔</h4>
+      <div class="rel-en">Edmund Husserl & Martin Heidegger</div>
+      <p>萨特哲学的源头。胡塞尔的"意向性"理论——意识总是"关于某物的意识"——是萨特意识理论的起点。海德格尔《存在与时间》提供了存在论框架。但萨特不是忠实继承者：他改造了胡塞尔的"先验自我"，批评了海德格尔对此在与他人关系的分析。</p>
+    </div>
+  </div>
+</section>
+
+<section class="era-section reveal">
+  <div class="wrap">
+    <h2>时代背景</h2>
+    <div class="era-block">
+      <h4>两次大战之间与战俘营</h4>
+      <p>萨特哲学成型于两次大战之间。1930年代的欧洲笼罩在法西斯主义崛起中，对"文明"的信心被动摇。1940年被俘的经历更深刻——战俘营是"极端处境"：自由被物理剥夺，但精神自由无法被剥夺。这成为《存在与虚无》中"处境中的自由"的现实背景。</p>
+    </div>
+    <div class="era-block">
+      <h4>德军占领与抵抗运动</h4>
+      <p>1940—1944年巴黎被德军占领。法国知识分子面临选择：合作、沉默、流亡或抵抗。《存在与虚无》在占领期间出版——一部论述自由的书，在被占领的城市出版，这不是巧合。"他人即地狱"的概念部分来自被占领的体验——在被监视的社会中，每个邻居都可能成为告密者。</p>
+    </div>
+    <div class="era-block">
+      <h4>战后存在主义热潮</h4>
+      <p>1945年解放后，存在主义成为法国的文化现象——不只是哲学，还是一种生活方式。左岸咖啡馆、爵士乐、黑色高领毛衣——萨特的"形象"被媒体塑造成存在主义的符号。1945年的演讲《存在主义是一种人道主义》就是在这一热潮中向公众解释存在主义"到底是什么"。</p>
+    </div>
+    <div class="era-block">
+      <h4>冷战与去殖民化</h4>
+      <p>1950年代后，萨特政治立场转向左翼。在阿尔及利亚战争（1954—1962）中支持独立，签署"121人宣言"。在越南战争期间反对美国，声援古巴革命。这些政治介入不是哲学之外的活动——它们是"介入"哲学的实践：哲学必须面对现实的不公正。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>生平时代 · 萨特哲学导读 ｜ 仅供学习交流</p>
+  </div>
+</footer>
+
+<button class="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const toTop=document.querySelector('.to-top');
+window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add('show');else toTop.classList.remove('show');});
+</script>
+</body>
+</html>

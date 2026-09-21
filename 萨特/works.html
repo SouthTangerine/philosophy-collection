@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>著作导读 · 萨特哲学导读</title>
+<style>
+:root{
+  --bg:#faf8f5; --bg2:#f4f1ec;
+  --ink:#2b2b2b; --ink-soft:#5a5a5a; --ink-dim:#8a8a8a;
+  --accent:#5a6b5a; --accent-light:#6a7c6a; --accent-dark:#3a4a3a;
+  --line:rgba(90,107,90,.18); --line-dim:rgba(90,107,90,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif;
+  background:var(--bg);color:var(--ink);
+  line-height:1.85;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:860px;margin:0 auto;padding:0 28px;}
+
+/* 导航 */
+nav.top{
+  position:sticky;top:0;z-index:50;
+  background:rgba(250,248,245,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line-dim);
+}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px;flex-wrap:wrap;gap:8px;}
+.brand{font-weight:700;letter-spacing:.16em;font-size:.88rem;color:var(--accent-dark);text-decoration:none;}
+nav.top ul{display:flex;gap:2px;list-style:none;flex-wrap:wrap;}
+nav.top ul a{
+  text-decoration:none;color:var(--ink-soft);
+  font-size:.76rem;padding:6px 12px;border-radius:4px;
+  transition:background .2s,color .2s;letter-spacing:.05em;
+}
+nav.top ul a:hover{background:rgba(90,107,90,.12);color:var(--accent-dark);}
+nav.top ul a.active{color:var(--accent-dark);font-weight:600;}
+
+/* 页头 */
+header.page-head{padding:60px 0 36px;text-align:center;}
+.page-head .eyebrow{font-size:.76rem;letter-spacing:.4em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;}
+.page-head h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;letter-spacing:.06em;color:var(--ink);}
+.page-head .sub{margin-top:16px;font-size:.94rem;color:var(--ink-soft);max-width:580px;margin-left:auto;margin-right:auto;}
+
+/* 著作跳转 */
+.work-nav{
+  position:sticky;top:52px;z-index:40;
+  background:rgba(250,248,245,.88);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line-dim);
+  padding:10px 0;
+}
+.work-nav .wrap{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;}
+.work-nav a{
+  font-size:.74rem;color:var(--ink-soft);
+  text-decoration:none;padding:4px 12px;border-radius:3px;
+  transition:background .2s,color .2s;letter-spacing:.04em;
+}
+.work-nav a:hover{background:var(--bg2);color:var(--accent-dark);}
+
+/* 著作区块 */
+.work{padding:52px 0 20px;scroll-margin-top:100px;}
+.work-head{margin-bottom:20px;}
+.work-head .wh-meta{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
+.work-head .wh-year{font-size:.82rem;color:var(--accent);font-weight:600;letter-spacing:.06em;}
+.work-head .wh-type{font-size:.76rem;color:var(--ink-dim);}
+.work-head h2{font-size:clamp(1.4rem,3.5vw,2rem);font-weight:900;color:var(--ink);letter-spacing:.04em;}
+.work-head .wh-en{font-size:.84rem;color:var(--ink-dim);font-style:italic;margin-top:4px;}
+
+/* 一句话定位 */
+.work-tagline{
+  background:var(--bg2);border-left:3px solid var(--accent);
+  border-radius:0 6px 6px 0;padding:18px 24px;margin:18px 0 26px;
+}
+.work-tagline .wt-label{font-size:.72rem;color:var(--accent);letter-spacing:.14em;margin-bottom:8px;font-weight:600;}
+.work-tagline p{font-size:.95rem;color:var(--ink);line-height:1.85;}
+
+/* 正文 */
+.work-body h4{
+  font-size:1rem;font-weight:700;color:var(--ink);
+  margin:28px 0 12px;letter-spacing:.04em;
+  padding-bottom:6px;border-bottom:1px solid var(--line-dim);
+}
+.work-body h4::before{content:"● ";color:var(--accent);font-size:.75rem;}
+.work-body p{font-size:.94rem;color:var(--ink-soft);line-height:1.9;margin-bottom:14px;text-indent:2em;}
+.work-body .point{font-weight:600;color:var(--ink);}
+.work-body strong{color:var(--ink);font-weight:600;}
+
+/* 结构表 */
+.struct-box{margin:20px 0;background:var(--bg2);border-radius:6px;overflow:hidden;}
+.struct-box .sb-title{padding:14px 22px 8px;font-size:.78rem;color:var(--accent);letter-spacing:.12em;font-weight:600;}
+.struct-box table{width:100%;border-collapse:collapse;}
+.struct-box td{padding:10px 22px;font-size:.88rem;border-top:1px solid var(--line-dim);}
+.struct-box td:first-child{width:30%;color:var(--accent-dark);font-weight:600;white-space:nowrap;}
+.struct-box td:last-child{color:var(--ink-soft);}
+
+/* 关键段落解读 */
+.passage{
+  margin:22px 0;padding:20px 26px;
+  background:var(--bg2);border-radius:6px;
+}
+.passage .pa-label{font-size:.72rem;color:var(--accent);letter-spacing:.14em;margin-bottom:10px;font-weight:600;}
+.passage .pa-quote{
+  font-size:.9rem;color:var(--ink);font-style:italic;
+  line-height:1.85;margin-bottom:12px;
+  padding:10px 16px;border-left:2px solid var(--accent);
+  background:rgba(90,107,90,.04);border-radius:0 4px 4px 0;
+}
+.passage .pa-interp{font-size:.88rem;color:var(--ink-soft);line-height:1.85;}
+.passage .pa-interp strong{color:var(--ink);}
+
+/* 阅读建议 */
+.read-tip{
+  margin:22px 0;padding:18px 24px;
+  border:1px solid var(--line);border-radius:6px;
+}
+.read-tip .rt-label{font-size:.72rem;color:var(--accent);letter-spacing:.14em;margin-bottom:10px;font-weight:600;}
+.read-tip p{font-size:.9rem;color:var(--ink-soft);line-height:1.85;margin-bottom:8px;}
+.read-tip p:last-child{margin-bottom:0;}
+.read-tip strong{color:var(--ink);}
+
+/* 关联概念 */
+.ref-concepts{margin:20px 0;padding:16px 0;border-top:1px solid var(--line-dim);border-bottom:1px solid var(--line-dim);}
+.ref-concepts .rc-label{font-size:.74rem;color:var(--accent);letter-spacing:.12em;margin-bottom:10px;font-weight:600;}
+.ref-concepts .rc-items{display:flex;flex-wrap:wrap;gap:8px;}
+.ref-concepts .rc-item{
+  font-size:.82rem;color:var(--ink-soft);
+  text-decoration:none;padding:4px 14px;
+  background:var(--bg2);border-radius:4px;
+  transition:background .2s,color .2s;
+}
+.ref-concepts .rc-item:hover{background:#e8e8e2;color:var(--accent-dark);}
+
+/* 分隔 */
+.divider{height:1px;background:var(--line-dim);margin:44px 0 0;}
+
+/* 页脚 */
+footer{padding:46px 0 36px;text-align:center;border-top:1px solid var(--line-dim);margin-top:40px;}
+footer p{font-size:.82rem;color:var(--ink-dim);letter-spacing:.06em;}
+
+/* 回到顶部 */
+.to-top{position:fixed;right:26px;bottom:30px;width:44px;height:44px;background:var(--accent);color:var(--bg);border:none;border-radius:6px;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s;z-index:60;}
+.to-top.show{opacity:1;pointer-events:auto;}
+
+/* 动画 */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* 移动端 */
+@media(max-width:640px){
+  .wrap{padding:0 20px;}
+  nav.top .wrap{justify-content:center;}
+  nav.top ul{justify-content:center;}
+  .work-nav{top:48px;}
+  .work{padding:40px 0 16px;}
+  .struct-box td:first-child{width:auto;}
+  .struct-box td{display:block;padding:6px 18px;}
+  .work-tagline,.passage,.read-tip{padding:16px 18px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">萨特导读</a>
+    <ul>
+      <li><a href="index.html">主页</a></li>
+      <li><a href="concepts.html">核心概念</a></li>
+      <li><a href="works.html" class="active">著作导读</a></li>
+      <li><a href="life.html">生平时代</a></li>
+      <li><a href="reads.html">名言阅读</a></li>
+      <li><a href="../index.html">合集</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="work-nav">
+  <div class="wrap">
+    <a href="#nausea">恶心</a>
+    <a href="#being-nothingness">存在与虚无</a>
+    <a href="#existentialism">存在主义是一种人道主义</a>
+    <a href="#huis-clos">禁闭</a>
+    <a href="#roads">自由之路</a>
+    <a href="#critique">辩证理性批判</a>
+  </div>
+</div>
+
+<header class="page-head">
+  <div class="wrap">
+    <div class="eyebrow">MAJOR WORKS</div>
+    <h1>著作导读</h1>
+    <p class="sub">六部关键著作的详细解读——每部含一句话定位、核心论点、结构概要、关键段落精读与阅读建议。萨特横跨哲学、小说与戏剧，以不同形式表达同一套思想，因此各著作之间存在内在呼应。</p>
+  </div>
+</header>
+
+<!-- ========== 《恶心》 ========== -->
+<section class="work reveal" id="nausea">
+  <div class="wrap">
+    <div class="work-head">
+      <div class="wh-meta">
+        <span class="wh-year">1938</span>
+        <span class="wh-type">长篇小说</span>
+      </div>
+      <h2>恶心</h2>
+      <div class="wh-en">La Nausée</div>
+    </div>
+
+    <div class="work-tagline">
+      <div class="wt-label">一句话定位</div>
+      <p>一部用文学来演示存在主义核心体验的作品——主人公在滨海城市布维尔遭遇"物的过剩存在"，感受到一切存在者无理由地、多余地、荒谬地在那里，由此产生"恶心"。</p>
+    </div>
+
+    <div class="work-body">
+      <h4>背景与缘起</h4>
+      <p>萨特在勒阿弗尔中学任教期间（1931年起）开始构思一部关于"偶然性"的小说，1932年动笔，此后数年间断续修改，直至1938年成书。小说以日记体写成，主人公安托万·洛根丁是一位历史研究者，在布维尔图书馆研究十八世纪的贵族罗尔邦侯爵。日记记录了他逐渐被一种说不清的生理和心理不适所占据的过程——这种不适就是"恶心"。</p>
+      <p>萨特后来在自传《词语》中说，他的一切哲学都源自少年时代对"偶然性"的体验——事物没有理由存在，一切都在那里，多余的、荒谬的。《恶心》正是对这种体验的文学呈现。小说先于哲学——许多在《存在与虚无》中被系统论述的概念（自在的过剩存在、偶然性、虚无化），在《恶心》中已以感性的形式出现。</p>
+
+      <h4>核心论点</h4>
+      <p>小说的核心不是讲述一个故事，而是记录一种<strong>哲学体验的生成过程</strong>。洛根丁逐渐发现：一切存在者——树根、石凳、啤酒杯、人的面孔——都没有存在的理由。它们不是"为了"什么而存在，也没有"本质"决定了它们必须这样。它们就是在那里，多余的、荒谬的——这种"存在的过剩"让洛根丁产生生理上的恶心。</p>
+      <p>萨特在日记中写："一切存在者都是没有理由地出生，由于虚弱而活着，由于偶然性而死去。"这句话几乎可以看作《存在与虚无》本体论的文学版预告。</p>
+
+      <h4>结构概要</h4>
+    </div>
+    <div class="struct-box">
+      <div class="sb-title">章节脉络</div>
+      <table>
+        <tr><td>开篇</td><td>洛根丁抵达布维尔，日常生活的描写，一切看起来"正常"但隐隐不对</td></tr>
+        <tr><td>第一幕</td><td>在海滩上看到一块黑色石根——第一次"恶心"：物的存在突然"太多了"</td></tr>
+        <tr><td>发展</td><td>恶心反复出现：在咖啡馆、在街道、在镜子前看自己的脸——一切都显得"多余的"</td></tr>
+        <tr><td>高潮</td><td>在公园面对栗树根——完整的哲学体验爆发：存在"没有理由"，一切都是"多余的"</td></tr>
+        <tr><td>转折</td><td>洛根丁听到爵士乐《Some of These Days》——艺术似乎提供了一个反例：艺术不是"多余的"</td></tr>
+        <tr><td>结尾</td><td>洛根丁决定离开布维尔去巴黎——不是解决问题，而是不再试图逃避体验</td></tr>
+      </table>
+    </div>
+
+    <div class="work-body">
+      <h4>关键段落解读</h4>
+    </div>
+    <div class="passage">
+      <div class="pa-label">公园栗树根场景（全书核心段落）</div>
+      <div class="pa-quote">"我坐在长椅上，看着面前的栗树根……它在那里。别的颜色都消失了，只剩下它，一种顽固的、赤裸裸的存在……我无法用语言表达我所看到的：它不是任何东西的属性，它就是存在本身——多余，没有理由，怎么解释都行，怎么也不能被证明。（意译）"</div>
+      <div class="pa-interp"><strong>解读：</strong>这是全书哲学密度最高的段落。萨特在这里展示的是"自在的存在"的直接显现——不是通过推理，而是通过感受。洛根丁不是"想到"物的存在荒谬，而是"看到"了它。这与《存在与虚无》的论证方式完全不同——哲学论著用概念来建立，而《恶心》用感官体验来传达。萨特展示了一个哲学洞见如何在身体层面发生——"恶心"不是心理症状，而是存在论意义上的体验：当"日常性"的外壳崩塌，存在的荒谬性直接涌入。</div>
+    </div>
+
+    <div class="work-body">
+      <h4>艺术作为出路？</h4>
+      <p>小说结尾，洛根丁在咖啡馆听到一首爵士老歌《Some of These Days》。这首歌打动了他——不是内容，而是形式：一首有旋律、有结构的东西，与"多余的"存在形成对比。萨特在小说中暗示：艺术可能是一种对抗"偶然性"的方式——艺术作品不是"多余的"，它有它存在的理由——审美必然性。</p>
+      <p>但这个出路是暧昧的。洛根丁并没有"解决"恶心——他只是离开布维尔，去巴黎"试试"是否可以做出一件"有理由存在"的事。小说在不确定中结束——萨特不给答案，因为在他的哲学中，存在没有先验的救赎。</p>
+    </div>
+
+    <div class="read-tip">
+      <div class="rt-label">阅读建议</div>
+      <p><strong>适合谁：</strong>所有人。这是萨特最易读、也最感性的作品。不需要哲学准备。</p>
+      <p><strong>怎么读：</strong>不要把它当哲学教科书来读——它是一部小说。感受洛根丁的体验比理解概念更重要。读完后，可以重读公园栗树根段落和结尾爵士乐段落，这两个段落是全书的哲学核心。</p>
+      <p><strong>中译本：</strong>桂裕芳译本（人民文学出版社）流传较广，日记体风格保留了法语的冷感和精确。</p>
+    </div>
+
+    <div class="ref-concepts">
+      <div class="rc-label">关联概念</div>
+      <div class="rc-items">
+        <a class="rc-item" href="concepts.html#existence">存在先于本质</a>
+        <a class="rc-item" href="concepts.html#being">自在与自为</a>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </div>
+</section>
+
+<!-- ========== 《存在与虚无》 ========== -->
+<section class="work reveal" id="being-nothingness">
+  <div class="wrap">
+    <div class="work-head">
+      <div class="wh-meta">
+        <span class="wh-year">1943</span>
+        <span class="wh-type">哲学论著 · 约700页</span>
+      </div>
+      <h2>存在与虚无</h2>
+      <div class="wh-en">L'Être et le Néant</div>
+    </div>
+
+    <div class="work-tagline">
+      <div class="wt-label">一句话定位</div>
+      <p>萨特的哲学主著，二十世纪存在主义最重要的理论著作。以现象学方法系统展开自在与自为、虚无化、自由、自欺、他人的凝视等核心概念，建立了一套以"虚无"和"自由"为轴心的存在论。</p>
+    </div>
+
+    <div class="work-body">
+      <h4>背景与缘起</h4>
+      <p>萨特1933—1934年作为交换教师赴柏林法兰西学院进修，系统研读胡塞尔与海德格尔的著作，并开始构思一部体系性的哲学著作。1939年战争爆发，萨特被征召入伍，1940年被俘，在战俘营中开始撰写《存在与虚无》。1941年获释后返回巴黎，在德军占领下继续写作，1943年出版。这部诞生于战争与占领中的著作，其哲学核心——自由、处境、责任——与作者所处的历史语境有深层关联。</p>
+      <p>哲学谱系上，萨特继承了三个传统：胡塞尔的意识现象学（意识总是"关于某物的意识"）、海德格尔的存在论（此在、被抛、向死而生）和笛卡尔的意识哲学（我思）。但他不是综合者——他用这些资源建立了自己的体系，核心创新在于把"虚无"从海德格尔式的存在论范畴改造成意识的结构性力量。</p>
+
+      <h4>核心论点</h4>
+      <p>全书的核心命题可以用一个链条来概括：</p>
+      <p><strong>① 存在有两种根本模式</strong>——自在的存在（物的存在）和自为的存在（意识的存在）。自在是充实的、不动的、是其所是；自为是虚无化的、自由的、不是其所是。</p>
+      <p><strong>② 虚无不是"什么都没有"</strong>——虚无是自为的存在方式。意识通过引入虚无到存在中，使得追问、否定、选择成为可能。如果没有虚无，就没有自由。</p>
+      <p><strong>③ 自由是意识的存在本身</strong>——因为意识不是任何固定的东西，它总是可以"不是"当下的自己，因此自由不是一种能力而是存在结构。</p>
+      <p><strong>④ 自欺是人逃避自由的方式</strong>——把自己当成自在来逃避自由的责任。自欺不是谎言而是自我分裂。</p>
+      <p><strong>⑤ 他人是存在论问题而非认识论问题</strong>——他人的凝视将我客体化，他人关系的基本结构是冲突。</p>
+      <p><strong>⑥ 做与是同一件事</strong>——人不是先有一个"本质"然后行动，而是通过行动来自我定义。因此自由和责任是同一枚硬币的两面。</p>
+
+      <h4>结构概要</h4>
+    </div>
+    <div class="struct-box">
+      <div class="sb-title">全书结构</div>
+      <table>
+        <tr><td>导言</td><td>对存在的追问——现象学的方法论，确立"存在"作为哲学的基本问题</td></tr>
+        <tr><td>第一卷</td><td>虚无的问题——否定的起源、自欺，虚无如何从存在内部涌现</td></tr>
+        <tr><td>第二卷</td><td>自为的存在——意识的结构、时间性、超越性</td></tr>
+        <tr><td>第三卷</td><td>为他——他人的证明、凝视与身体的存在论处境</td></tr>
+        <tr><td>第四卷</td><td>拥有、做与是——自由与处境、行动与责任</td></tr>
+        <tr><td>结论</td><td>存在论纲要——自在与自为的关系；萨特承诺写一部道德论，但终其一生未完成</td></tr>
+      </table>
+    </div>
+
+    <div class="work-body">
+      <h4>关键段落解读</h4>
+    </div>
+
+    <div class="passage">
+      <div class="pa-label">钥匙孔场景（第三卷·他人章核心段落）</div>
+      <div class="pa-quote">"我在走廊上。有人通过钥匙孔偷看。我看着……走廊上响起了脚步声。有人看着我。我立刻意识到我在被看……我在他人的凝视中体验到自己的异化。我从一个纯粹的、看世界的意识，变成了一个被他人看到的世界中的对象。"</div>
+      <div class="pa-interp"><strong>解读：</strong>这个场景是萨特关于"他人"哲学的实验装置。萨特用它说明：他人的出现不是认识论事件（"我发现有另一个人存在"），而是存在论事件（"我的存在结构被改变"）。在看钥匙孔时，我是纯粹的看——主体。脚步声响起时，我被看——我成了客体。这种从主体到客体的翻转完全由他人的凝视造成。我无法控制这个翻转——这就是"他人即地狱"的存在论根源：我的外在存在不在我手中，而在他人手中。萨特由此推导出：他人关系的基本结构是冲突——因为两个主体都想保持自己的主权，都想让对方成为客体。</div>
+    </div>
+
+    <div class="passage">
+      <div class="pa-label">咖啡馆服务生（第一卷·自欺章核心段落）</div>
+      <div class="pa-quote">"他的姿态有点太精确了，有点太敏捷。他的声音有点太响亮……他在扮演服务生。咖啡馆里的服务生不是在'做'服务生，他在'是'服务生。他把自己变成了一种自动机……他在逃避作为人的自由，让自己成为某种物。"</div>
+      <div class="pa-interp"><strong>解读：</strong>这是萨特自欺分析的标志性案例。服务生"过度"的精确就是自欺的标记——如果他只是在做服务生的工作，他不需要那么"像"服务生。他的过度投入说明他在试图说服自己"我是一个服务生"，而非"我在做服务生的事"。自欺的结构是：他知道自己是自由的人（否则不需要说服自己不是），但他选择把自己当成一个有固定职能的自在之物。萨特不是说做服务生不好——他指出的是人如何用角色来逃避自由的焦虑。</div>
+    </div>
+
+    <div class="work-body">
+      <h4>本书的哲学史地位</h4>
+      <p>《存在与虚无》是存在主义从一种文化态度变成体系哲学的标志。它把克尔凯郭尔和尼采的"生存体验"用现象学的严格方法重新建立，使存在主义有了自己的"第一哲学"。但它也因极端的自由观、对他人关系的悲观判断、以及缺乏伦理体系而受到大量批评。</p>
+      <p>萨特在结论中承诺写一部道德论——但他终其一生没有完成。1960年的《辩证理性批判》可以看作某种"实践伦理"的尝试，但方向已从个体自由转向历史实践。从这个意义上说，《存在与虚无》是一个未完成的体系的上半部分——它完成了本体论，但留下伦理学空白。</p>
+    </div>
+
+    <div class="read-tip">
+      <div class="rt-label">阅读建议</div>
+      <p><strong>适合谁：</strong>有一定哲学基础的读者。了解胡塞尔现象学和海德格尔存在论会大有帮助，但不是必要前提。</p>
+      <p><strong>怎么读：</strong>不必从头到尾。建议顺序：① 导言（方法论）→ ② 第一卷（虚无与自欺，最具洞察力）→ ③ 第三卷（他人，最精彩）→ ④ 第四卷（自由与处境，全书高潮）。第二卷关于时间性与超越性的部分技术性最强，可后读。</p>
+      <p><strong>中译本：</strong>推荐陈宣良等译本（生活·读书·新知三联书店），术语翻译经过学界多年校验。</p>
+      <p><strong>辅助阅读：</strong>赫伯特·斯皮格尔伯格《现象学运动》中关于萨特的章节、杜小真《存在与自由——萨特及其存在主义》可作入门向导。</p>
+    </div>
+
+    <div class="ref-concepts">
+      <div class="rc-label">关联概念</div>
+      <div class="rc-items">
+        <a class="rc-item" href="concepts.html#being">自在与自为</a>
+        <a class="rc-item" href="concepts.html#freedom">自由与责任</a>
+        <a class="rc-item" href="concepts.html#bad-faith">自欺</a>
+        <a class="rc-item" href="concepts.html#others">他人即地狱</a>
+        <a class="rc-item" href="concepts.html#situation">处境</a>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </div>
+</section>
+
+<!-- ========== 《存在主义是一种人道主义》 ========== -->
+<section class="work reveal" id="existentialism">
+  <div class="wrap">
+    <div class="work-head">
+      <div class="wh-meta">
+        <span class="wh-year">1946</span>
+        <span class="wh-type">公开演讲记录稿 · 约40页</span>
+      </div>
+      <h2>存在主义是一种人道主义</h2>
+      <div class="wh-en">L'Existentialisme est un humanisme</div>
+    </div>
+
+    <div class="work-tagline">
+      <div class="wt-label">一句话定位</div>
+      <p>萨特1945年在巴黎俱乐部发表的公开演讲记录稿。面向公众、篇幅短小，是存在主义最广为流传的入门文本。也是理解萨特思想的最快捷径——但也因简化而受批评（包括萨特本人后来不满意）。</p>
+    </div>
+
+    <div class="work-body">
+      <h4>背景与缘起</h4>
+      <p>1945年二战结束，法国思想界围绕存在主义发生激烈论战。共产党批评它"悲观主义""资产阶级个人主义""否定人类团结"；天主教批评它"无神论""否定道德""鼓励放任"。萨特接受邀请，在巴黎"现代俱乐部"发表公开演讲，为存在主义辩护。</p>
+      <p>演讲现场盛况空前——听众挤满了大厅，甚至有人爬窗户进来。萨特站着讲了两个小时，随后又回答提问。这篇记录稿随后出版，成为法国战后最畅销的哲学书之一。它的标题"存在主义是一种人道主义"是一个宣言——萨特要表明存在主义不是虚无主义，它关心人，关心人的尊严和自由。</p>
+
+      <h4>核心论点</h4>
+      <p>演讲的核心是回应两个方向的批评，并正面阐述存在主义的基本主张：</p>
+      <p><strong>① 回应"悲观主义"指控。</strong>共产党和天主教批评存在主义强调焦虑、荒谬、死亡——过于悲观。萨特反问：把人当成有自由选择能力的存在者，是悲观还是乐观？乐观不是相信"一切都会好"，而是相信"人可以通过行动改变"。存在主义一点也不悲观——它把责任交还给人自己。</p>
+      <p><strong>② 回应"否定道德"指控。</strong>批评者说存在主义没有先验价值表，因此无法区分善恶。萨特承认没有外在价值表，但坚持这恰恰是道德的前提——道德不能来自外在命令，只能来自自由选择。人通过选择"创造价值"。选择本身就是价值——因为选择意味着承担责任。</p>
+      <p><strong>③ 正面阐述"存在先于本质"。</strong>这是演讲的核心命题。萨特用裁纸刀类比：裁纸刀先有概念后有存在，但人没有预先概念——人先存在，然后通过行动定义自己。这意味着人没有借口、没有本性可以依赖——"人没有写在天上的善的标准"。</p>
+      <p><strong>④ "人在选择自己时选择了全人类。"</strong>这是演讲中最激进的命题。当我做出一个选择时，我不只是选择了"自己这样做"，我选择了"一个应当这样做的人"——因此也是在为全人类选择。如果我说"可以欺骗"，我就是在说"欺骗是可以的"——这是对全人类的判断。这个论断借鉴了康德道德律的普遍化要求，但基础不是理性而是自由选择。</p>
+      <p><strong>⑤ "人被判处为自由。"</strong>萨特用"被判处"来表达自由的不可逃避性。自由不是选择的特权——不选择也是一种选择，你无法退出自由。因此自由是"判处"——一种无可推卸的责任。</p>
+      <p><strong>⑥ "存在主义是一种人道主义。"</strong>演讲的结论是：正因为人没有外在本质，人的尊严才在于自由——在于通过行动把自己造就成人。这是最彻底的人道主义——不是"关心人"这种温情，而是"把人作为自由的存在者来尊重"。</p>
+    </div>
+
+    <div class="work-body">
+      <h4>关键段落解读</h4>
+    </div>
+    <div class="passage">
+      <div class="pa-label">年轻人的选择（演讲核心案例）</div>
+      <div class="pa-quote">"一个年轻人来找我。他面临选择：留在他母亲身边照顾她——她需要他；还是去英国参加抵抗组织。没有道德律可以替他决定。康德说'要把他人当目的而非手段'——但留是当母亲为目的，去是把战斗的目的当目的。两者都说得通。基督教说要'爱你的邻人'——但敌人也是邻人。没有任何先验标准能告诉他怎么做。"</div>
+      <div class="pa-interp"><strong>解读：</strong>这是全书最著名的段落，萨特用它来展示"没有外在价值表"的现实后果。年轻人不能依赖任何先验道德——不管是康德还是基督教——因为每一种都可以被用来支持任何一方。萨特由此得出：道德决策不能来自外在标准，只能来自自由选择。年轻人的选择本身就是价值的创造——他通过选择成为"一个留下的人"或"一个去参战的人"。这个案例同时是萨特对"道德可普遍化"的借用和修改：康德式的普遍化靠理性，萨特的"为全人类选择"靠自由。</div>
+    </div>
+
+    <div class="work-body">
+      <h4>本书的争议与局限</h4>
+      <p>这本小书虽然传播最广，却也是萨特最不满意的作品。他后来多次表示后悔出版——认为其中把复杂的哲学体系简化为口号，有些表述过于粗糙。海德格尔也对此书不满，专门写了《关于人道主义的信》来划清界限——他认为萨特把存在主义变成了一种"主义"来贩售，而且把"人道主义"理解为以人为中心的形而上学，恰恰是他要超越的。</p>
+      <p>但作为入门文本，它依然是最好的。它把《存在与虚无》七百页的体系压缩为一个清晰的论证链——即使有简化，核心命题是准确的。如果要快速了解萨特"在说什么"，这是第一选择。</p>
+    </div>
+
+    <div class="read-tip">
+      <div class="rt-label">阅读建议</div>
+      <p><strong>适合谁：</strong>所有人。这是存在主义最佳的入门书——一个下午可以读完。</p>
+      <p><strong>怎么读：</strong>先读一遍把握整体论证。然后注意萨特如何回应批评——这些回应本身也是理解存在主义的方式。读完后再去读《存在与虚无》的导言和《恶心》会更有方向感。</p>
+      <p><strong>中译本：</strong>推荐周煦良译本（上海译文出版社），语言简洁流畅，保留了演讲的口语感。</p>
+      <p><strong>注意：</strong>读完这本不应以为"懂了萨特"——它是一张地图，不是地形本身。萨特本人也提醒：这只是入门，不是他的哲学本身。</p>
+    </div>
+
+    <div class="ref-concepts">
+      <div class="rc-label">关联概念</div>
+      <div class="rc-items">
+        <a class="rc-item" href="concepts.html#existence">存在先于本质</a>
+        <a class="rc-item" href="concepts.html#freedom">自由与责任</a>
+        <a class="rc-item" href="concepts.html#engagement">介入</a>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </div>
+</section>
+
+<!-- ========== 《禁闭》 ========== -->
+<section class="work reveal" id="huis-clos">
+  <div class="wrap">
+    <div class="work-head">
+      <div class="wh-meta">
+        <span class="wh-year">1944</span>
+        <span class="wh-type">独幕剧 · 约一小时</span>
+      </div>
+      <h2>禁闭</h2>
+      <div class="wh-en">Huis clos</div>
+    </div>
+
+    <div class="work-tagline">
+      <div class="wt-label">一句话定位</div>
+      <p>三个死者被关在同一个房间里，彼此折磨——"他人即地狱"的出处。一部以戏剧形式呈现的哲学论文，把《存在与虚无》关于他人关系的论辩浓缩在一个房间、三个人之间。</p>
+    </div>
+
+    <div class="work-body">
+      <h4>背景与缘起</h4>
+      <p>1943年《存在与虚无》出版后，萨特想把关于"他人"的哲学通过戏剧呈现。1944年5月在巴黎老鸽棚剧院首演。这部戏在德军占领下的巴黎引起强烈共鸣——观众在战时看到一部关于"被困"的戏，演出反响热烈，连演不衰。</p>
+
+      <h4>核心论点</h4>
+      <p>《禁闭》的核心哲学命题是：他人关系的基本结构是冲突——不是因为有坏人，而是因为人的存在结构决定了他人必然成为"地狱"。当两个人互相看时，一个人是看者，另一个被看——被看的人被客体化。三个人在一起时，情况更复杂：每个人都在试图保持主体，同时在被另外两个人客体化——这是一个不可能解决的三角。</p>
+      <p>戏剧的力量在于：它把这个抽象的哲学论点变成具体的、可感的处境。在舞台上，观众看到的就是——三个人的互相观看如何自动地产生折磨，不需要酷刑，只需要"被看"。</p>
+
+      <h4>三个人物与三角结构</h4>
+    </div>
+    <div class="struct-box">
+      <div class="sb-title">人物结构</div>
+      <table>
+        <tr><td>加尔森（Garcin）</td><td>一个在战争中当逃兵被枪毙的男子。他需要别人承认"他不是懦夫"。他不想要行动的承认，他想要"思想上的承认"——"我是一个不勇敢但思想正确的人"。</td></tr>
+        <tr><td>伊内丝（Inès）</td><td>一个女邮政职员，因同性恋三角关系导致多人死亡。她是三个人中最"清醒"的——她知道这里是地狱，也知道地狱是彼此。她是"他人"最纯粹的化身——她只看，只评判。</td></tr>
+        <tr><td>埃丝特尔（Estelle）</td><td>一个上流社会女子，因情人抛弃婴儿致死。她不能忍受"被看而不被喜欢"——她需要男性的目光来确认自己的存在。她否认死——"这里只是另一种生活"。</td></tr>
+      </table>
+    </div>
+
+    <div class="work-body">
+      <h4>三角的运作</h4>
+      <p>三个人构成一个不可逃脱的三角：加尔森需要伊内丝认可他不是懦夫，但伊内丝只看重埃丝特尔；埃丝特尔需要加尔森的男性凝视来确认自己的存在，但加尔森需要的是思想认可而非肉体；伊内丝需要埃丝特尔的目光，但埃丝特尔需要的是男性的目光。每个人需要的东西都在第三个人手中——因此每个人都被拒绝。三角结构自动产生折磨，不需要刑具。</p>
+      <p>萨特在这里展示了《存在与虚无》的核心论点：他人不是我可以掌控的对象。加尔森不能通过说服伊内丝来改变她对他的判断——因为伊内丝的自由不在他手中。他也不能强迫埃丝特尔来确认他——因为她需要的不是他给的东西。每个角色都是自由的存在者，而自由意味着不可被控制。</p>
+    </div>
+
+    <div class="passage">
+      <div class="pa-label">结尾名句</div>
+      <div class="pa-quote">加尔森："那么，地狱就是……" 伊内丝："……他人。" 加尔森："总之，无论怎样，人总是要死的，这些眼睛……这些将不断看着我的眼睛……我明白了，地狱就是他人。"</div>
+      <div class="pa-interp"><strong>解读：</strong>这句话常被误读为"人际关系令人痛苦"。但萨特后来解释：这不仅是说与他人的关系痛苦，更是说如果你完全依赖他人的判断来定义自己，他人就是地狱。加尔森的问题不是"伊内丝太刻薄"，而是"我需要伊内丝认可我不是懦夫"。他把自我定义的权利交给了伊内丝——这个让渡就是"地狱"的真正来源。如果他不依赖他人的判断——如果他的自由足以让他自己定义自己——伊内丝的目光就只是目光，不是地狱。</div>
+    </div>
+
+    <div class="work-body">
+      <h4>为什么没有刑具</h4>
+      <p>戏剧开头，加尔森注意到房间里没有刑具——没有铁钳、没有烙铁、没有热油。只有一扇打不开的门和三个沙发。萨特的设计是精确的：地狱不需要物理刑具——因为最残酷的折磨是"被他人凝视而无法逃脱"。三个人被关在一起——没有暗处、没有隐私——每个人的存在都暴露在另外两个人的凝视下。这种暴露本身就是刑罚。</p>
+      <p>萨特在这里暗示了一个政治维度：在极权或监视社会中，人不能有隐私——一切都被看——这本身就是地狱。德军占领下的巴黎，每个法国人都在被看——被邻居、被告密者、被占领者。《禁闭》在这个语境中不只是一出哲学剧。</p>
+    </div>
+
+    <div class="read-tip">
+      <div class="rt-label">阅读建议</div>
+      <p><strong>适合谁：</strong>所有人。一小时的独幕剧，易读。</p>
+      <p><strong>怎么读：</strong>先通读一遍看戏剧如何展开。然后注意三角关系——三个人各自需要什么、为什么无法得到。读完后重看结尾——"地狱就是他人"在上下文中有了完全不同的分量。</p>
+      <p><strong>与哲学的关联：</strong>读完后重读《存在与虚无》第三卷"他人"的部分，会看到戏剧如何将哲学论证感性化。</p>
+      <p><strong>中译本：</strong>李喻君译本（人民文学出版社）或《萨特戏剧集》中的版本均可。</p>
+    </div>
+
+    <div class="ref-concepts">
+      <div class="rc-label">关联概念</div>
+      <div class="rc-items">
+        <a class="rc-item" href="concepts.html#others">他人即地狱</a>
+        <a class="rc-item" href="concepts.html#freedom">自由与责任</a>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </div>
+</section>
+
+<!-- ========== 《自由之路》 ========== -->
+<section class="work reveal" id="roads">
+  <div class="wrap">
+    <div class="work-head">
+      <div class="wh-meta">
+        <span class="wh-year">1945–1949</span>
+        <span class="wh-type">长篇小说三部曲</span>
+      </div>
+      <h2>自由之路</h2>
+      <div class="wh-en">Les Chemins de la liberté</div>
+    </div>
+
+    <div class="work-tagline">
+      <div class="wt-label">一句话定位</div>
+      <p>以1938年慕尼黑危机至二战爆发为背景，展现自由如何在历史处境中实现。三部曲从"不介入"到"被迫选择"到"行动"——是萨特关于"处境中的自由"最完整的文学展开。</p>
+    </div>
+
+    <div class="work-body">
+      <h4>背景与缘起</h4>
+      <p>萨特1938年开始构思，1943—1949年陆续出版。计划写四部，只完成三部。小说以数学教师马蒂厄为主人公，围绕1938年9月慕尼黑危机——张伯伦与希特勒的谈判——展开，描写一群巴黎知识分子在战争阴影下"不得不选择"的过程。</p>
+      <p>三部曲对应自由实现的三个阶段：从抽象的自由（我知道我应该自由但我选择逃避）→ 被迫的自由（处境逼我选择）→ 行动的自由（我选择行动并承担后果）。这条线与《存在与虚无》的"自由"概念和《辩证理性批判》的"实践"概念形成呼应。</p>
+
+      <h4>三部曲结构</h4>
+    </div>
+    <div class="struct-box">
+      <div class="sb-title">三部曲</div>
+      <table>
+        <tr><td>《理性的时代》</td><td>1945。慕尼黑危机前。马蒂厄是一个不介入的知识分子——他"知道"自己应该自由但回避行动。他偷情、犹豫、拖延，用"理性"为自己的不行动辩护。自由是抽象的——存在但未实现。</td></tr>
+        <tr><td>《延缓》</td><td>1945。慕尼黑危机期间。多线叙事——火车上的人、咖啡馆里的人、街上的人——每个人都被历史逼到选择的边缘。"延缓"既是张伯伦延缓战争的方式，也是每个人延缓选择的方式。时间在压缩——逃避的空间在消失。</td></tr>
+        <tr><td>《心灵之死》</td><td>1949。战争爆发，马蒂厄参军。他终于从一个"思考自由的人"变成"行动自由的人"——在战斗中开枪射击敌人时，他"终于自由了"——不是因为选择的对错，而是因为他选择了。"心灵之死"意味着纯粹思想的自由死了——行动的自由诞生。</td></tr>
+      </table>
+    </div>
+
+    <div class="work-body">
+      <h4>核心论点</h4>
+      <p>三部曲的核心是：<strong>自由不是一种状态，而是一种实现</strong>。马蒂厄在第一部中是"自由的"——他有自由的思想——但他不自由，因为他的自由没有在行动中实现。第二部他开始被迫面对历史——慕尼黑危机让"不选择"不再可能。第三部他开枪——在这一刻他"自由了"——不是因为他选择了"正确"的立场，而是因为他的自由终于在行动中实现了。</p>
+      <p>这与《存在与虚无》中"自由不是能力而是存在"的论点呼应——但更进了一步。小说展示的是：存在结构上的自由如果不化为行动，就是"不自由的自由"。只有行动才让自由成为"自由的"。</p>
+
+      <h4>关键段落解读</h4>
+    </div>
+    <div class="passage">
+      <div class="pa-label">马蒂厄开枪（《心灵之死》结尾）</div>
+      <div class="pa-quote">"他开了一枪。他向那个开枪的贵族、向整个秩序、向整个旧世界开了一枪。他每开一枪都是自由的。他在射击——终于。这是他一生都在等待的时刻。他不是在'拯救什么'，也不是在'复仇什么'——他只是在行动。他的整个存在终于与行动同一。"</div>
+      <div class="pa-interp"><strong>解读：</strong>这是三部曲的高潮，也是萨特"自由"哲学的文学呈现。关键不在于马蒂厄射击的对象，而在于射击这个行为本身——他在开枪时"自由了"，因为这是他第一次完全地、没有犹豫地选择了行动。前两部中的马蒂厄一直在"思考自由"——但思考不是自由，行动才是。萨特不是在美化暴力——他是在展示自由的完成形式。一个人可以一辈子"思考"自由，但只有在某个时刻行动，自由才"发生"了。</div>
+    </div>
+
+    <div class="work-body">
+      <h4>《延缓》的叙事创新</h4>
+      <p>第二部《延缓》在叙事形式上有重要创新：萨特用多线同时叙事——不同人物在不同地点的经历在书中相互交错，用分栏排版（法文原版）来模拟"同一时刻多个人被历史同时卷入"的体验。这种形式选择不是技巧炫耀——它是哲学的延伸：在慕尼黑危机中，所有人都被同一个历史事件同时影响——"延缓"既是张伯伦延缓战争的策略，也是每个人"延缓选择"的隐喻。叙事形式本身在传达萨特关于"处境"的哲学：自由不是个人的孤立行为，而是在共同的处境中展开。</p>
+    </div>
+
+    <div class="read-tip">
+      <div class="rt-label">阅读建议</div>
+      <p><strong>适合谁：</strong>对萨特小说感兴趣的读者。比《恶心》长且复杂，但叙事性强。</p>
+      <p><strong>怎么读：</strong>按顺序读三部。第一部需要耐心——马蒂厄的"不行动"是有意为之，耐心看他如何逃避。第二部注意形式——多线交叉在传达什么。第三部直接追到结尾——马蒂厄开枪的段落是全书哲学高潮。</p>
+      <p><strong>与哲学的关联：</strong>读完三部曲后回到《存在与虚无》第四卷"自由与处境"章——会看到小说如何把哲学论证转化为人物命运。</p>
+      <p><strong>中译本：</strong>均有中译本，推荐三联书店或人民文学出版社版本。</p>
+    </div>
+
+    <div class="ref-concepts">
+      <div class="rc-label">关联概念</div>
+      <div class="rc-items">
+        <a class="rc-item" href="concepts.html#freedom">自由与责任</a>
+        <a class="rc-item" href="concepts.html#situation">处境</a>
+        <a class="rc-item" href="concepts.html#engagement">介入</a>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </div>
+</section>
+
+<!-- ========== 《辩证理性批判》 ========== -->
+<section class="work reveal" id="critique">
+  <div class="wrap">
+    <div class="work-head">
+      <div class="wh-meta">
+        <span class="wh-year">1960</span>
+        <span class="wh-type">哲学论著</span>
+      </div>
+      <h2>辩证理性批判</h2>
+      <div class="wh-en">Critique de la raison dialectique</div>
+    </div>
+
+    <div class="work-tagline">
+      <div class="wt-label">一句话定位</div>
+      <p>萨特后期哲学的代表作。试图将存在主义的个体自由与马克思主义的历史辩证法结合起来——从"个人的自由"到"集体的实践"的哲学尝试。标志着萨特从纯粹个体自由观向历史实践的转向。</p>
+    </div>
+
+    <div class="work-body">
+      <h4>背景与缘起</h4>
+      <p>1950年代萨特逐渐接近马克思主义，对《存在与虚无》中的极端个体自由观有所反思。他承认早期没有充分考虑到历史条件和社会结构对个人自由的制约。1957年发表《方法问题》（后作为《辩证理性批判》第一卷第一章），1960年出版第一卷。第二卷未完成，1985年由阿莱特·埃尔凯姆·萨特整理出版。</p>
+      <p>萨特的动机是回应一个挑战：如果存在主义坚持个体自由是根本的，那么如何解释阶级、社会结构、历史规律对人的塑造？马克思主义有一套成熟的答案——阶级意识、生产关系、历史辩证法——但它倾向于决定论，有把个人变成历史工具的风险。萨特要保留个体的自由（存在主义），同时承认历史的力量（马克思主义）。</p>
+
+      <h4>核心论点</h4>
+      <p><strong>① 存在主义与马克思主义不是对立的。</strong>萨特认为马克思主义是"我们时代不可超越的哲学"——只要资本主义存在，马克思主义就有效。但萨特批评苏联版的"辩证唯物主义"把辩证法变成了教条，失去了对个人实践的关注。存在主义是马克思主义内部的一种"意识形态"——在马克思主义的框架内恢复个人的具体性和自由。</p>
+      <p><strong>② "实践"作为核心概念。</strong>萨特用"实践"（praxis）来连接个体自由和集体历史。实践是个人在处境中的行动——它既是个人的自由选择，又是在特定历史条件下展开的。实践创造历史，但实践也被历史条件所限制。个人不是被历史决定的——历史是个人实践的结果——但历史条件限制了实践的可能性。</p>
+      <p><strong>③ "实践-惰性"（pratico-inerte）。</strong>这是萨特后期最重要的新概念。人的实践创造了物质条件——但物质条件一旦形成，就反过来限制人的实践。比如：人发明了货币来方便交换——但货币一旦存在，人就受制于货币的逻辑（积累、贬值、通货膨胀）。实践创造了惰性的物质结构——惰性结构反过来制约实践。这是萨特对"自由不是在真空中"的深化。</p>
+      <p><strong>④ 集团与序列。</strong>萨特分析了两种集体形式。"序列集团"（série）是一群人在一起但各自孤立——比如等公交车的一排人，他们面对同一个对象但互不关联。"融合集团"（groupe en fusion）是个人在共同目标下融合为集体——比如1789年攻占巴士底狱的群众。在融合集团中，个人的自由和集体的行动第一次统一——但融合集团很快退化为序列——自由与集体的统一是短暂的。</p>
+      <p><strong>⑤ 辩证理性的可能性条件。</strong>萨特要回答：辩证法是否只是一种方法，还是历史本身是辩证的？他的答案是：历史是辩证的——因为历史是个人实践的结果，而实践内在地是辩证的（行动与结果之间的张力）。但历史辩证法不是黑格尔式的绝对精神展开，而是个人实践在惰性结构中运作的辩证法。</p>
+
+      <h4>结构概要</h4>
+    </div>
+    <div class="struct-box">
+      <div class="sb-title">全书结构</div>
+      <table>
+        <tr><td>第一章</td><td>方法问题——回应马克思主义批评，论证存在主义与马克思主义的兼容性</td></tr>
+        <tr><td>第一部分</td><td>个人实践——从个体的行动出发，分析实践如何在惰性结构中展开</td></tr>
+        <tr><td>第二部分</td><td>集团——从序列到融合集团，再到融合集团的退化，分析集体行动如何可能</td></tr>
+        <tr><td>第三部分</td><td>历史——从个人实践到历史总体化，论证辩证理性的可能性条件</td></tr>
+      </table>
+    </div>
+
+    <div class="work-body">
+      <h4>关键段落解读</h4>
+    </div>
+    <div class="passage">
+      <div class="pa-label">方法问题核心论断</div>
+      <div class="pa-quote">"马克思主义是我们时代不可超越的哲学……但自从中断以来，它不再发展了。它的概念变成了静态的。存在主义是马克思主义内部的一种意识形态——但它现在是恢复个人在马克思主义中被抹去的位置的唯一希望。"</div>
+      <div class="pa-interp"><strong>解读：</strong>这是萨特对存在主义与马克思主义关系的定位——存在主义不是马克思主义的替代，而是其内部的修正。萨特承认马克思主义的基本框架（阶级分析、历史辩证法）是有效的——但批评苏联版的马克思主义把个人变成了历史规律的工具。存在主义的任务是：在马克思主义框架内恢复个人的自由和实践的具体性。这个定位既是对马克思主义的尊重，也是对它的批评——而且隐含了对正统马克思主义的某种不信任。</div>
+    </div>
+
+    <div class="work-body">
+      <h4>与早期哲学的关系</h4>
+      <p>《辩证理性批判》不是对《存在与虚无》的否定，而是其发展。萨特在序言中说，他从不否定早期的自由观，而是"把它放到更大的框架中"。《存在与虚无》处理的是个人存在论，《辩证理性批判》处理的是历史存在论——前者是后者的基础，后者是前者的延伸。</p>
+      <p>关键变化在于：早期萨特说"处境不决定自由，自由照亮处境"——后期萨特说"实践-惰性结构确实制约自由，但自由通过实践可以改变这些结构"。这不是否定自由——而是把自由放到了更复杂的历史图景中。</p>
+    </div>
+
+    <div class="read-tip">
+      <div class="rt-label">阅读建议</div>
+      <p><strong>适合谁：</strong>对萨特后期思想或对存在主义与马克思主义关系感兴趣的读者。需要了解《存在与虚无》基本概念和马克思主义基本框架。</p>
+      <p><strong>怎么读：</strong>先读第一章"方法问题"——这是全书最清晰、最独立的部分，可以单独阅读。然后读第一部分关于实践与惰性的分析。集团和历史部分难度较大，可后读。</p>
+      <p><strong>中译本：</strong>推荐林骧华等译本（安徽文艺出版社），术语较多需要耐心。</p>
+      <p><strong>辅助阅读：</strong>了解梅洛-庞蒂《辩证法的冒险》中关于萨特的批评会有帮助。波伏娃回忆录中对萨特1950年代思想转向也有记录。</p>
+    </div>
+
+    <div class="ref-concepts">
+      <div class="rc-label">关联概念</div>
+      <div class="rc-items">
+        <a class="rc-item" href="concepts.html#freedom">自由与责任</a>
+        <a class="rc-item" href="concepts.html#situation">处境</a>
+        <a class="rc-item" href="concepts.html#engagement">介入</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>著作导读 · 萨特哲学导读 ｜ 仅供学习交流</p>
+  </div>
+</footer>
+
+<button class="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const toTop=document.querySelector('.to-top');
+window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add('show');else toTop.classList.remove('show');});
+</script>
+</body>
+</html>
