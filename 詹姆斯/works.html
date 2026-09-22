@@ -329,12 +329,12 @@ window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add(
   if(toTopBtn){
     window.addEventListener('scroll',function(){if(window.scrollY>400)toTopBtn.classList.add('show');else toTopBtn.classList.remove('show');});
   }
-  // 页面缩放：三档 100/125/150
+  // 页面缩放：四档 75/100/125/150
   var zoomLevel=100;
   var html=document.documentElement;
   var fabEl=document.getElementById('tool-fab');
   var toTop=document.querySelector('.to-top');
-  var ZOOM_STEPS=[100,125,150];
+  var ZOOM_STEPS=[75,100,125,150];
   function applyZoom(){
     html.style.zoom=zoomLevel+'%';
     var rev=(100/zoomLevel*100).toFixed(2)+'%';
