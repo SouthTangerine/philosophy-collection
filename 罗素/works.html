@@ -209,7 +209,7 @@
       <p><strong>① 逻辑分析是哲学方法。</strong>罗素明确提出：哲学应该学习数学的方法——通过精确的逻辑分析来处理哲学问题。传统哲学的问题不在于问题本身，而在于处理方式不够精确。如果用逻辑分析重新审视认识论问题，许多"不可解"的困惑可以被发现为伪问题。</p>
       <p><strong>② 从感觉材料到物理对象。</strong>罗素论证：我们直接感知的不是物理对象，而是感觉材料——颜色、形状、触感。物理对象是从感觉材料中通过逻辑构造"推论"出来的。但这种推论不是归纳的（像休谟说的），而是逻辑的——物理对象可以被定义为感觉材料的逻辑构造。</p>
       <p><strong>③ 逻辑原子论的首次系统阐述。</strong>罗素在讲座中提出了逻辑原子论的基本框架：世界由原子事实构成，语言由原子命题构成，复杂命题是原子命题的真值函数。哲学的任务是通过分析揭示语言的逻辑结构。这是逻辑原子论第一次作为系统纲领被公开阐述——它在1918年的伦敦讲座中被进一步发展。</p>
-      <p><strong>④ 中立一元论的雏形。</strong>在讨论感觉材料的本性时，罗素已经开始倾向于：感觉材料本身既不是心的也不是物的——它们是"中性的"。这个思想在后来的著作中被发展为中立一元论。</p>
+      <p><strong>④ 中立一元论的雏形。</strong>在讨论感觉材料的本性时，罗素已经开始倾向于：感觉材料本身既不是心的也不是物的——它们是"中性的"。这个思想在后来的著作中被发展为中立一元论。这一思路打破了传统的心物二元：如果感觉材料既不是"心理事件"也不是"物理事件"，而是某种中性的"材料"，那么"心"与"物"就不是两种不同实体，而是同一类材料的不同组织方式。这一立场后来被詹姆斯的"纯粹经验"概念所呼应，也成为罗素中期哲学的核心形而上学主张。</p>
     </div>
 
     <div class="struct-box">
@@ -403,12 +403,75 @@
 </footer>
 
 <button class="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="tool-fab" id="tool-fab">
+  <button id="font-increase" title="页面放大" aria-label="页面放大">A+</button>
+  <button id="font-decrease" title="页面缩小" aria-label="页面缩小">A−</button>
+  <button id="dark-toggle" title="暗黑模式" aria-label="切换暗黑模式">◐</button>
+</div>
 
 <script>
 const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 const toTop=document.querySelector('.to-top');
 window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add('show');else toTop.classList.remove('show');});
+/* 浮动工具组 */
+(function(){
+  var fab=document.getElementById('tool-fab');
+  if(!fab)return;
+  var btns=fab.querySelectorAll('button');
+  // 工具按钮始终显示
+  btns.forEach(function(b){b.classList.add('show');});
+  // 回到顶部按钮滚动后显示
+  var toTopBtn=document.querySelector('.to-top');
+  if(toTopBtn){
+    window.addEventListener('scroll',function(){if(window.scrollY>400)toTopBtn.classList.add('show');else toTopBtn.classList.remove('show');});
+  }
+  // 页面缩放：三档 100/125/150
+  var zoomLevel=100;
+  var html=document.documentElement;
+  var fabEl=document.getElementById('tool-fab');
+  var toTop=document.querySelector('.to-top');
+  var ZOOM_STEPS=[100,125,150];
+  function applyZoom(){
+    html.style.zoom=zoomLevel+'%';
+    var rev=(100/zoomLevel*100).toFixed(2)+'%';
+    if(fabEl)fabEl.style.zoom=rev;
+    if(toTop)toTop.style.zoom=rev;
+    document.body.classList.toggle('zoomed',zoomLevel>100);
+  }
+  var saved=localStorage.getItem('philo-zoom');
+  if(saved){zoomLevel=parseInt(saved);applyZoom();}
+  document.getElementById('font-increase').addEventListener('click',function(){
+    var idx=ZOOM_STEPS.indexOf(zoomLevel);
+    if(idx<ZOOM_STEPS.length-1){zoomLevel=ZOOM_STEPS[idx+1];applyZoom();localStorage.setItem('philo-zoom',zoomLevel);}
+  });
+  document.getElementById('font-decrease').addEventListener('click',function(){
+    var idx=ZOOM_STEPS.indexOf(zoomLevel);
+    if(idx>0){zoomLevel=ZOOM_STEPS[idx-1];applyZoom();localStorage.setItem('philo-zoom',zoomLevel);}
+  });
+  // 放大后拖拽浏览
+  var isDown=false,startX=0,startY=0,scrollX=0,scrollY=0;
+  document.body.addEventListener('mousedown',function(e){
+    if(!document.body.classList.contains('zoomed'))return;
+    if(e.target.closest('a,button,.to-top,.tool-fab,nav,.sub-nav'))return;
+    isDown=true;document.body.classList.add('dragging');
+    startX=e.clientX;startY=e.clientY;
+    scrollX=window.scrollX;scrollY=window.scrollY;
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove',function(e){
+    if(!isDown)return;
+    window.scrollTo(scrollX-(e.clientX-startX),scrollY-(e.clientY-startY));
+  });
+  document.addEventListener('mouseup',function(){isDown=false;document.body.classList.remove('dragging');});
+  // 暗黑模式
+  var dt=document.getElementById('dark-toggle');
+  if(localStorage.getItem('philo-dark')==='1'){document.body.classList.add('dark');dt.classList.add('active');}
+  dt.addEventListener('click',function(){
+    document.body.classList.toggle('dark');var on=document.body.classList.contains('dark');
+    dt.classList.toggle('active',on);localStorage.setItem('philo-dark',on?'1':'0');
+  });
+})();
 </script>
 </body>
 </html>
