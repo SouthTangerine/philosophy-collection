@@ -213,6 +213,46 @@ footer p{font-size:.82rem;color:var(--ink-dim);letter-spacing:.06em;}
 .to-top{position:fixed;right:26px;bottom:30px;width:44px;height:44px;background:var(--accent);color:var(--bg);border:none;border-radius:6px;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s;z-index:60;}
 .to-top.show{opacity:1;pointer-events:auto;}
 
+/* 浮动工具组 */
+.tool-fab{position:fixed;right:26px;bottom:84px;z-index:60;display:flex;flex-direction:column;gap:10px;}
+.tool-fab button{
+  width:44px;height:44px;border-radius:50%;border:none;
+  cursor:pointer;font-size:1.15rem;font-family:inherit;
+  background:var(--bg2);color:var(--accent-dark);
+  box-shadow:0 2px 8px rgba(43,43,43,.10);
+  transition:background .25s,color .25s,transform .2s;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+}
+.tool-fab button.show{opacity:1;pointer-events:auto;}
+.tool-fab button:hover{background:var(--accent);color:var(--bg);transform:scale(1.08);}
+.tool-fab button.active{background:var(--accent);color:var(--bg);}
+/* 放大拖拽状态 */
+body.zoomed{cursor:grab;overflow:auto;}
+body.zoomed.dragging{cursor:grabbing;}
+body.zoomed.dragging *{user-select:none;}
+@media(max-width:640px){
+  .to-top{right:18px;bottom:22px;width:38px;height:38px;font-size:1rem;}
+  .tool-fab{right:18px;bottom:70px;gap:8px;}
+  .tool-fab button{width:38px;height:38px;font-size:1rem;}
+}
+
+/* 暗黑模式 */
+body.dark{
+  --bg:#1e1e1e; --bg2:#2a2a2a;
+  --ink:#d5d5d5; --ink-soft:#a8a8a8; --ink-dim:#787878;
+  --accent:#7a9a7a; --accent-light:#8aaa8a; --accent-dark:#9aba9a;
+  --line:rgba(122,154,122,.20); --line-dim:rgba(122,154,122,.12);
+}
+body.dark nav.top{background:rgba(30,30,30,.92);}
+body.dark .sub-nav{background:rgba(30,30,30,.88);}
+body.dark .card:hover{background:#333;}
+body.dark .ref-box .rb-item:hover{background:#333;}
+body.dark .to-top{background:var(--accent);color:var(--bg);}
+body.dark .passage .pa-quote{background:rgba(122,154,122,.06);}
+body.dark .tool-fab button{background:var(--bg2);color:var(--accent-dark);box-shadow:0 2px 8px rgba(0,0,0,.25);}
+body.dark .tool-fab button:hover{background:var(--accent);color:var(--bg);}
+
 /* 动画 */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
 .reveal.in{opacity:1;transform:translateY(0);}
