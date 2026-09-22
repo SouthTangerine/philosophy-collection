@@ -42,6 +42,9 @@ nav.top .drop-menu{
   border-radius:8px;padding:8px;box-shadow:0 10px 30px rgba(43,43,43,.12);
   display:none;z-index:60;
 }
+nav.top .drop-menu::before{
+  content:'';position:absolute;top:-10px;left:0;right:0;height:10px;
+}
 nav.top .drop:hover .drop-menu,
 nav.top .drop:focus-within .drop-menu{display:block;}
 nav.top .drop-menu a{
