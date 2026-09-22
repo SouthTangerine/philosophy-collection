@@ -43,7 +43,6 @@
     <div class="stats">
       <div class="stat"><b>6</b><span>核心概念</span></div>
       <div class="stat"><b>6</b><span>关键著作</span></div>
-      <div class="stat"><b>5</b><span>页内容</span></div>
     </div>
   </div>
 </header>
@@ -214,12 +213,75 @@
 </footer>
 
 <button class="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="tool-fab" id="tool-fab">
+  <button id="font-increase" title="页面放大" aria-label="页面放大">A+</button>
+  <button id="font-decrease" title="页面缩小" aria-label="页面缩小">A−</button>
+  <button id="dark-toggle" title="暗黑模式" aria-label="切换暗黑模式">◐</button>
+</div>
 
 <script>
 const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 const toTop=document.querySelector('.to-top');
 window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add('show');else toTop.classList.remove('show');});
+/* 浮动工具组 */
+(function(){
+  var fab=document.getElementById('tool-fab');
+  if(!fab)return;
+  var btns=fab.querySelectorAll('button');
+  // 工具按钮始终显示
+  btns.forEach(function(b){b.classList.add('show');});
+  // 回到顶部按钮滚动后显示
+  var toTopBtn=document.querySelector('.to-top');
+  if(toTopBtn){
+    window.addEventListener('scroll',function(){if(window.scrollY>400)toTopBtn.classList.add('show');else toTopBtn.classList.remove('show');});
+  }
+  // 页面缩放：三档 100/125/150
+  var zoomLevel=100;
+  var html=document.documentElement;
+  var fabEl=document.getElementById('tool-fab');
+  var toTop=document.querySelector('.to-top');
+  var ZOOM_STEPS=[100,125,150];
+  function applyZoom(){
+    html.style.zoom=zoomLevel+'%';
+    var rev=(100/zoomLevel*100).toFixed(2)+'%';
+    if(fabEl)fabEl.style.zoom=rev;
+    if(toTop)toTop.style.zoom=rev;
+    document.body.classList.toggle('zoomed',zoomLevel>100);
+  }
+  var saved=localStorage.getItem('philo-zoom');
+  if(saved){zoomLevel=parseInt(saved);applyZoom();}
+  document.getElementById('font-increase').addEventListener('click',function(){
+    var idx=ZOOM_STEPS.indexOf(zoomLevel);
+    if(idx<ZOOM_STEPS.length-1){zoomLevel=ZOOM_STEPS[idx+1];applyZoom();localStorage.setItem('philo-zoom',zoomLevel);}
+  });
+  document.getElementById('font-decrease').addEventListener('click',function(){
+    var idx=ZOOM_STEPS.indexOf(zoomLevel);
+    if(idx>0){zoomLevel=ZOOM_STEPS[idx-1];applyZoom();localStorage.setItem('philo-zoom',zoomLevel);}
+  });
+  // 放大后拖拽浏览
+  var isDown=false,startX=0,startY=0,scrollX=0,scrollY=0;
+  document.body.addEventListener('mousedown',function(e){
+    if(!document.body.classList.contains('zoomed'))return;
+    if(e.target.closest('a,button,.to-top,.tool-fab,nav,.sub-nav'))return;
+    isDown=true;document.body.classList.add('dragging');
+    startX=e.clientX;startY=e.clientY;
+    scrollX=window.scrollX;scrollY=window.scrollY;
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove',function(e){
+    if(!isDown)return;
+    window.scrollTo(scrollX-(e.clientX-startX),scrollY-(e.clientY-startY));
+  });
+  document.addEventListener('mouseup',function(){isDown=false;document.body.classList.remove('dragging');});
+  // 暗黑模式
+  var dt=document.getElementById('dark-toggle');
+  if(localStorage.getItem('philo-dark')==='1'){document.body.classList.add('dark');dt.classList.add('active');}
+  dt.addEventListener('click',function(){
+    document.body.classList.toggle('dark');var on=document.body.classList.contains('dark');
+    dt.classList.toggle('active',on);localStorage.setItem('philo-dark',on?'1':'0');
+  });
+})();
 </script>
 </body>
 </html>
