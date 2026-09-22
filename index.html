@@ -50,26 +50,6 @@ nav.top .drop-menu a{
 }
 nav.top .drop-menu a:hover{background:rgba(90,107,90,.12);color:var(--accent-dark);}
 nav.top .drop-menu a em{font-size:.7rem;color:var(--ink-dim);font-style:normal;letter-spacing:.04em;white-space:nowrap;}
-/* 筛选工具 */
-#browse-tools{padding-top:10px;}
-.filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 14px;}
-.f-tag{
-  font-family:inherit;font-size:.76rem;color:var(--ink-soft);
-  background:var(--bg2);border:1px solid transparent;border-radius:4px;
-  padding:5px 14px;cursor:pointer;letter-spacing:.06em;
-  transition:background .2s,color .2s,border-color .2s;
-}
-.f-tag:hover{background:#e8e8e2;color:var(--accent-dark);}
-.f-tag.active{background:var(--accent);color:var(--bg);border-color:var(--accent);}
-.search-box{
-  width:100%;font-family:inherit;font-size:.88rem;color:var(--ink);
-  background:var(--bg2);border:1px solid var(--line-dim);border-radius:6px;
-  padding:10px 16px;outline:none;transition:border-color .2s;
-}
-.search-box:focus{border-color:var(--accent);}
-.search-box::placeholder{color:var(--ink-dim);}
-.filter-hint{font-size:.78rem;color:var(--ink-dim);margin-top:8px;letter-spacing:.05em;}
-.p-card.hidden{display:none;}
 @media(max-width:640px){
   .portal-grid{grid-template-columns:1fr;}
   nav.top .drop{position:static;}
@@ -176,18 +156,6 @@ nav.top .drop-menu a em{font-size:.7rem;color:var(--ink-dim);font-style:normal;l
     </div>
   </div>
 </header>
-
-<section class="sec" id="browse-tools">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="dot"></span>
-      <h2>关键词搜索</h2>
-      <span class="span">名字与流派</span>
-    </div>
-    <input type="search" class="search-box" id="philo-search" placeholder="搜索哲学家或流派：中文名 / 英文名 / 某某主义，如：柏拉图、Nietzsche、斯多葛、存在主义…">
-    <p class="filter-hint" id="filter-hint"></p>
-  </div>
-</section>
 
 <section class="sec reveal" id="sec-grk">
   <div class="wrap">
@@ -430,7 +398,7 @@ nav.top .drop-menu a em{font-size:.7rem;color:var(--ink-dim);font-style:normal;l
         <h3>叔本华</h3>
         <div class="pc-en">Arthur Schopenhauer</div>
         <div class="pc-desc">"世界是我的意志"——意志哲学的奠基人。以悲观主义和审美静观开辟了一条通往东方思想与存在主义的道路。</div>
-        <div class="pc-tag">意志哲学</div><span class="kw" style="display:none">唯意志论 存在主义</span>
+        <div class="pc-tag">意志哲学</div><span class="kw" style="display:none">唯意志论 悲观主义</span>
       </a>
       <a class="p-card" data-school="19世纪" href="克尔凯郭尔/index.html">
         <div class="pc-era">1813 — 1855 · 丹麦</div>
@@ -458,7 +426,7 @@ nav.top .drop-menu a em{font-size:.7rem;color:var(--ink-dim);font-style:normal;l
         <h3>尼采</h3>
         <div class="pc-en">Friedrich Nietzsche</div>
         <div class="pc-desc">"上帝已死"——权力意志、超人、永恒轮回。以锤子做哲学，砸碎旧价值，为新价值的诞生开辟空间。</div>
-        <div class="pc-tag">权力意志</div><span class="kw" style="display:none">唯意志论 存在主义 虚无主义</span>
+        <div class="pc-tag">权力意志</div><span class="kw" style="display:none">唯意志论 虚无主义</span>
       </a>
     </div>
   </div>
@@ -559,24 +527,6 @@ const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.t
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 const toTop=document.querySelector('.to-top');
 window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add('show');else toTop.classList.remove('show');});
-/* 关键词搜索 */
-(function(){
-  const box=document.getElementById('philo-search');
-  const hint=document.getElementById('filter-hint');
-  const cards=Array.from(document.querySelectorAll('.p-card'));
-  function apply(){
-    const kw=box.value.trim().toLowerCase();
-    let visible=0;
-    cards.forEach(c=>{
-      const text=(c.textContent+' '+c.querySelector('.pc-en').textContent).toLowerCase();
-      const show=!kw||text.includes(kw);
-      c.classList.toggle('hidden',!show);
-      if(show)visible++;
-    });
-    hint.textContent=kw?('找到 '+visible+' 位哲学家'):'';
-  }
-  box.addEventListener('input',apply);
-})();
 </script>
 </body>
 </html>
