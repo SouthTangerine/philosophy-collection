@@ -262,6 +262,7 @@ body.dark .tool-fab button:hover{background:var(--accent);color:var(--bg);}
 /* 移动端 */
 @media(max-width:640px){
   .wrap{padding:0 20px;}
+  nav.top{position:static;}
   nav.top .wrap{justify-content:center;}
   nav.top ul{justify-content:center;}
   .card-grid{grid-template-columns:1fr;}
