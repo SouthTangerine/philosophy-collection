@@ -62,6 +62,13 @@ nav.top .drop-menu a:hover{background:rgba(90,107,90,.12);color:var(--accent-dar
 nav.top .drop-menu a em{font-size:.7rem;color:var(--ink-dim);font-style:normal;letter-spacing:.04em;white-space:nowrap;}
 @media(max-width:640px){
   .portal-grid{grid-template-columns:1fr;}
+  nav.top .drop{position:static;}
+  nav.top .drop-menu{position:static;transform:none;display:none;flex-wrap:wrap;gap:4px;background:none;border:none;box-shadow:none;padding:2px 10px 10px 14px;min-width:0;}
+  nav.top .drop .drop-menu{display:none!important;}
+  nav.top .drop .drop-menu.open{display:flex!important;}
+  nav.top .drop-menu a{display:inline-flex;gap:0;padding:3px 9px;font-size:.72rem;background:rgba(90,107,90,.07);border-radius:4px;color:var(--ink-soft);}
+  nav.top .drop-menu a em{display:none;}
+  nav.top .drop-btn::after{content:"·";opacity:.5;}
 }
 </style>
 </head>
@@ -812,6 +819,22 @@ window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add(
     dt.classList.toggle('active',on);localStorage.setItem('philo-dark',on?'1':'0');
   });
 })();
+/* 手机端下拉：点击时代名展开人物列表（不跳转锚点），再点人物进入子站 */
+document.addEventListener('click',function(e){
+  function isMobile(){return window.innerWidth<=640;}
+  var btn=e.target.closest('nav.top .drop-btn');
+  var openMenus=document.querySelectorAll('nav.top .drop-menu.open');
+  if(btn){
+    if(!isMobile())return; /* 桌面端维持 hover/focus 展开 */
+    e.preventDefault();
+    var menu=btn.parentElement.querySelector('.drop-menu');
+    var wasOpen=menu&&menu.classList.contains('open');
+    Array.prototype.forEach.call(openMenus,function(m){m.classList.remove('open');});
+    if(menu&&!wasOpen)menu.classList.add('open');
+  }else{
+    Array.prototype.forEach.call(openMenus,function(m){m.classList.remove('open');});
+  }
+});
 </script>
 </body>
 </html>
