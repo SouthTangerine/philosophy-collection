@@ -208,6 +208,8 @@ section.sec{padding:36px 0 16px;scroll-margin-top:70px;}
 /* 页脚 */
 footer{padding:46px 0 36px;text-align:center;border-top:1px solid var(--line-dim);margin-top:40px;}
 footer p{font-size:.82rem;color:var(--ink-dim);letter-spacing:.06em;}
+footer p.foot-meta{font-size:.74rem;margin-top:8px;color:var(--ink-dim);opacity:.85;}
+footer p.foot-meta .maker{color:var(--accent-dark);font-weight:600;letter-spacing:.08em;}
 
 /* 回到顶部 */
 .to-top{position:fixed;right:26px;bottom:30px;width:44px;height:44px;background:var(--accent);color:var(--bg);border:none;border-radius:6px;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s;z-index:60;}
