@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>站内搜索 · Philosophia</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+.search-form{display:flex;align-items:center;gap:8px;flex:1;max-width:340px;justify-content:flex-end;position:relative;}
+.search-form input{background:var(--bg2);border:1px solid var(--line-dim);border-radius:18px;padding:7px 16px;font-size:.84rem;color:var(--ink);width:200px;outline:none;transition:border-color .2s;}
+.search-form input:focus{border-color:var(--accent);}
+.search-form button{background:var(--accent);color:var(--bg);border:none;border-radius:18px;padding:7px 18px;font-size:.8rem;cursor:pointer;letter-spacing:.08em;transition:background .2s;}
+.search-form button:hover{background:var(--accent-dark);}
+.search-suggest{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--bg);border:1px solid var(--line-dim);border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.10);z-index:99;overflow:hidden;display:none;}
+.search-suggest a{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 14px;font-size:.86rem;color:var(--ink);text-decoration:none;}
+.search-suggest a:hover{background:rgba(90,107,90,.10);}
+.search-suggest .ss-en{font-size:.72rem;color:var(--ink-dim);}
+body.dark .search-suggest{background:#2a2a2a;box-shadow:0 6px 24px rgba(0,0,0,.4);}
+.result-head{padding:36px 0 6px;}
+.result-head .q{font-size:1.15rem;color:var(--ink);font-weight:700;margin-bottom:4px;}
+.result-head .count{font-size:.8rem;color:var(--ink-dim);}
+.result-list{list-style:none;padding:0;margin:14px 0 0;}
+.result-list li{padding:15px 0;border-bottom:1px solid var(--line-dim);}
+.result-list li:last-child{border-bottom:none;}
+.result-list a{text-decoration:none;color:inherit;display:block;}
+.result-list a:hover .r-title{color:var(--accent-dark);}
+.r-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+.r-name{font-size:.92rem;font-weight:700;color:var(--accent-dark);letter-spacing:.04em;}
+.r-en{font-size:.72rem;color:var(--ink-dim);letter-spacing:.05em;}
+.r-page{font-size:.72rem;color:var(--ink-dim);background:rgba(90,107,90,.08);padding:2px 9px;border-radius:4px;letter-spacing:.06em;}
+.r-title{margin-top:5px;font-size:.9rem;color:var(--ink);line-height:1.7;}
+.r-title b{color:var(--accent-dark);font-weight:700;}
+.r-hits{margin-top:3px;font-size:.78rem;color:var(--ink-dim);line-height:1.7;}
+.r-hits b{color:var(--accent-dark);}
+.r-exact{margin-top:5px;font-size:.8rem;color:var(--accent);font-weight:600;}
+.suggest-box{margin-top:22px;padding:14px 18px;background:rgba(90,107,90,.07);border-radius:8px;font-size:.86rem;color:var(--ink-soft);line-height:1.8;}
+.suggest-box a{color:var(--accent-dark);margin:0 6px 0 2px;text-decoration:none;border-bottom:1px dashed var(--accent-dark);}
+.suggest-box a:hover{border-bottom-style:solid;}
+.empty{padding:60px 0;text-align:center;color:var(--ink-dim);}
+.empty .tip{font-size:.8rem;margin-top:10px;}
+@media(max-width:640px){
+  nav.top .wrap{flex-wrap:wrap;gap:10px;}
+  .search-form{max-width:none;width:100%;justify-content:center;padding-bottom:10px;}
+  .search-form input{width:auto;flex:1;max-width:240px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Philosophia</a>
+    <form class="search-form" id="searchForm" action="search.html" method="get" role="search">
+      <input type="search" name="q" id="q" placeholder="搜索哲学家、概念、著作…" aria-label="站内搜索" autofocus>
+      <button type="submit">搜索</button>
+    </form>
+  </div>
+</nav>
+
+<main class="result-page">
+  <div class="wrap">
+    <div class="result-head" id="resultHead"></div>
+    <div id="resultBody"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Philosophia · 从古希腊到现当代</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.3 ｜ 2026-09-25 ｜ 仅供学习交流</p>
+  </div>
+</footer>
+
+<script src="search-index.js"></script>
+<script>
+(function(){
+  var DATA = window.SEARCH_INDEX || {};
+  var seen = {};
+
+  function qs(name) {
+    var m = new RegExp('[?&]' + name + '=([^&]*)').exec(location.search);
+    return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')).trim() : '';
+  }
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function highlight(text, words) {
+    var t = esc(text);
+    words.forEach(function (w) {
+      var i = t.toLowerCase().indexOf(w.toLowerCase());
+      if (i >= 0) {
+        t = t.slice(0, i) + '<b>' + t.slice(i, i + w.length) + '</b>' + t.slice(i + w.length);
+      }
+    });
+    return t;
+  }
+
+  /* 单词对文本的匹配分：完全相等120 / 开头100 / 包含70 */
+  function scoreText(textLower, word) {
+    if (textLower === word) return 120;
+    if (textLower.indexOf(word) === 0) return 100;
+    if (textLower.indexOf(word) >= 0) return 70;
+    return 0;
+  }
+
+  /* 多关键词 AND：每个词都必须命中，总分求和 */
+  function scorePage(pg, words) {
+    var total = 0, hits = [];
+    for (var i = 0; i < words.length; i++) {
+      var w = words[i];
+      var best = 0, bestHit = null;
+      if (pg.title) {
+        var s = scoreText(pg.title.toLowerCase(), w);
+        if (s > best) { best = s; bestHit = pg.title; }
+      }
+      (pg.heads || []).forEach(function (h) {
+        var hs = scoreText(h.toLowerCase(), w);
+        if (hs > best) { best = hs; bestHit = h; }
+      });
+      if (!best) return null;
+      total += best;
+      if (bestHit && hits.indexOf(bestHit) < 0) hits.push(bestHit);
+    }
+    return { score: total, hits: hits.slice(0, 3) };
+  }
+
+  function search(q) {
+    var words = q.toLowerCase().split(/\s+/).filter(Boolean);
+    var results = [];
+
+    /* 1) 哲学家名精确匹配（中文或英文），置顶 */
+    if (words.length === 1) {
+      Object.keys(DATA).forEach(function (name) {
+        var ph = DATA[name];
+        if (name === q || (ph.en && ph.en.toLowerCase() === words[0])) {
+          seen[name + '/index.html'] = true;
+          results.push({ name: name, en: ph.en, kind: 'exact', page: '主页',
+            href: name + '/index.html', score: 10000 });
+        }
+      });
+    }
+
+    /* 2) 页面级匹配，人名/英文名命中加成 */
+    Object.keys(DATA).forEach(function (name) {
+      var ph = DATA[name];
+      var nameBoost = 0;
+      words.forEach(function (w) {
+        if (name.toLowerCase().indexOf(w) >= 0) nameBoost += 50;
+        else if (ph.en && ph.en.toLowerCase().indexOf(w) >= 0) nameBoost += 50;
+      });
+      Object.keys(ph.pages).forEach(function (pk) {
+        var pg = ph.pages[pk];
+        var pageFile = pk === 'index' ? 'index.html' : pk + '.html';
+        var key = name + '/' + pageFile;
+        if (seen[key]) return;
+        var r = scorePage(pg, words);
+        if (!r) return;
+        seen[key] = true;
+        results.push({ name: name, en: ph.en, kind: 'page', page: pg.label,
+          href: key, title: pg.title, hits: r.hits, score: r.score + nameBoost });
+      });
+    });
+
+    results.sort(function (a, b) { return b.score - a.score; });
+    return results.slice(0, 30);
+  }
+
+  /* 近似词推荐：编辑距离 or 最长公共子串 */
+  function editDistance(a, b) {
+    var m = a.length, n = b.length, dp = [], i, j;
+    for (i = 0; i <= m; i++) dp[i] = [i];
+    for (j = 0; j <= n; j++) dp[0][j] = j;
+    for (i = 1; i <= m; i++)
+      for (j = 1; j <= n; j++)
+        dp[i][j] = Math.min(dp[i-1][j] + 1, dp[i][j-1] + 1,
+          dp[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+    return dp[m][n];
+  }
+
+  function lcsLen(a, b) {
+    var m = a.length, n = b.length, dp = [], i, j;
+    for (i = 0; i <= m; i++) dp[i] = [0];
+    for (j = 0; j <= n; j++) dp[0][j] = 0;
+    for (i = 1; i <= m; i++)
+      for (j = 1; j <= n; j++)
+        dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] + 1 : Math.max(dp[i-1][j], dp[i][j-1]);
+    return dp[m][n];
+  }
+
+  function suggest(q) {
+    if (!q || q.length < 2 || q.length > 10) return [];
+    var lq = q.toLowerCase();
+    var cands = [];
+    var added = {};
+    function tryAdd(text, isName) {
+      var t = String(text);
+      if (!t || t === q || added[t]) return;
+      var tl = t.toLowerCase();
+      var d = editDistance(lq, tl);
+      /* 前缀包含（去掉末字的查询串被候选包含）视为强推荐 */
+      var strong = lq.length >= 3 && tl.indexOf(lq.slice(0, lq.length - 1)) >= 0;
+      var ok = strong || d <= 1 || lcsLen(lq, tl) >= Math.max(2, lq.length - 1);
+      if (ok) { added[t] = true; cands.push({ t: t, d: d, isName: !!isName, strong: strong ? 1 : 0 }); }
+    }
+    Object.keys(DATA).forEach(function (name) {
+      tryAdd(name, true);
+      if (DATA[name].en) tryAdd(DATA[name].en, true);
+    });
+    Object.keys(DATA).forEach(function (name) {
+      var pages = DATA[name].pages || {};
+      Object.keys(pages).forEach(function (pk) {
+        (pages[pk].heads || []).forEach(function (h) { if (h.length <= 10) tryAdd(h, false); });
+      });
+    });
+    cands.sort(function (a, b) {
+      return (b.strong - a.strong) || (a.d - b.d) || (b.isName - a.isName) ||
+        ((b.t.charAt(0) === lq.charAt(0) ? 1 : 0) - (a.t.charAt(0) === lq.charAt(0) ? 1 : 0)) ||
+        (a.t.length - b.t.length);
+    });
+    return cands.slice(0, 3);
+  }
+
+  /* ===== 渲染 ===== */
+  var q = qs('q');
+  var head = document.getElementById('resultHead');
+  var body = document.getElementById('resultBody');
+
+  if (q) {
+    var words = q.toLowerCase().split(/\s+/).filter(Boolean);
+    var results = search(q);
+    head.innerHTML = '<div class="q">「' + esc(q) + '」的搜索结果</div>' +
+      '<div class="count">共找到 ' + results.length + ' 个相关页面</div>';
+    if (!results.length) {
+      var sug = suggest(q);
+      var html = '<div class="empty">未找到与「' + esc(q) + '」直接相关的内容</div>';
+      if (sug.length) {
+        html += '<div class="suggest-box">您是不是想找：' +
+          sug.map(function (s) { return '<a href="search.html?q=' + encodeURIComponent(s.t) + '">' + esc(s.t) + '</a>'; }).join('　') +
+          '</div>';
+      } else {
+        html += '<div class="suggest-box">试试搜索哲学家姓名（如“康德”）或拼音以外的原名（如 Kant），也可以用空格组合多个关键词（如“康德 批判”）。</div>';
+      }
+      body.innerHTML = html;
+    } else {
+      var html2 = '<ul class="result-list">';
+      results.forEach(function (r) {
+        html2 += '<li><a href="' + r.href + '">';
+        html2 += '<div class="r-top"><span class="r-name">' + esc(r.name) + '</span>' +
+          (r.en ? '<span class="r-en">' + esc(r.en) + '</span>' : '') +
+          (r.kind === 'exact'
+            ? '<span class="r-page">哲学家主页</span>'
+            : '<span class="r-page">' + esc(r.page) + '</span>') +
+          '</div>';
+        if (r.kind === 'exact') {
+          html2 += '<div class="r-exact">进入「' + esc(r.name) + '」主页</div>';
+        } else {
+          html2 += '<div class="r-title">' + (r.title ? highlight(r.title, words) : '') + '</div>';
+          if (r.hits && r.hits.length) {
+            html2 += '<div class="r-hits">' + r.hits.map(function (h) { return highlight(h, words); }).join(' ｜ ') + '</div>';
+          }
+        }
+        html2 += '</a></li>';
+      });
+      html2 += '</ul>';
+      body.innerHTML = html2;
+    }
+  } else {
+    head.innerHTML = '<div class="q">站内搜索</div><div class="count">支持中英文姓名（Kant）、概念与著作名，可用空格组合多关键词</div>';
+  }
+
+  /* ===== 结果页搜索框的即时建议 ===== */
+  var form = document.getElementById('searchForm');
+  var input = document.getElementById('q');
+  var box = document.createElement('div');
+  box.className = 'search-suggest';
+  form.appendChild(box);
+  input.addEventListener('input', function () {
+    var v = input.value.trim().toLowerCase();
+    if (!v) { box.style.display = 'none'; return; }
+    var items = [];
+    Object.keys(DATA).forEach(function (name) {
+      var ph = DATA[name];
+      if (name.toLowerCase().indexOf(v) >= 0 || (ph.en && ph.en.toLowerCase().indexOf(v) >= 0)) {
+        items.push({ name: name, en: ph.en || '' });
+      }
+    });
+    if (!items.length) { box.style.display = 'none'; return; }
+    box.innerHTML = items.slice(0, 6).map(function (it) {
+      return '<a href="' + it.name + '/index.html"><span class="ss-name">' + esc(it.name) +
+        '</span><span class="ss-en">' + esc(it.en) + '</span></a>';
+    }).join('');
+    box.style.display = 'block';
+  });
+  document.addEventListener('click', function (e) {
+    if (!form.contains(e.target)) box.style.display = 'none';
+  });
+})();
+</script>
+</body>
+</html>

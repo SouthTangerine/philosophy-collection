@@ -77,6 +77,10 @@ nav.top .drop-menu a em{font-size:.7rem;color:var(--ink-dim);font-style:normal;l
 <nav class="top">
   <div class="wrap">
     <a class="brand" href="index.html">Philosophia</a>
+    <form class="search-form" action="search.html" method="get" role="search">
+      <input type="search" name="q" placeholder="搜索哲学家、概念…" aria-label="站内搜索">
+      <button type="submit">搜索</button>
+    </form>
     <ul>
       <li><a href="index.html" class="active">主页</a></li>
       <li class="drop">
@@ -745,7 +749,7 @@ nav.top .drop-menu a em{font-size:.7rem;color:var(--ink-dim);font-style:normal;l
 <footer>
   <div class="wrap">
     <p>Philosophia · 从古希腊到现当代</p>
-    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.2 ｜ 2026-09-23 ｜ 仅供学习交流</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.3 ｜ 2026-09-25 ｜ 仅供学习交流</p>
   </div>
 </footer>
 
@@ -835,6 +839,37 @@ document.addEventListener('click',function(e){
     Array.prototype.forEach.call(openMenus,function(m){m.classList.remove('open');});
   }
 });
+</script>
+<script src="search-index.js"></script>
+<script>
+/* 门户搜索即时建议：输入时下拉匹配的哲学家，点击直达主页 */
+(function(){
+  var form=document.querySelector('nav.top .search-form');
+  if(!form||!window.SEARCH_INDEX)return;
+  var input=form.querySelector('input');
+  var box=document.createElement('div');
+  box.className='search-suggest';
+  form.appendChild(box);
+  input.addEventListener('input',function(){
+    var v=input.value.trim().toLowerCase();
+    if(!v){box.style.display='none';return;}
+    var items=[];
+    Object.keys(window.SEARCH_INDEX).forEach(function(name){
+      var ph=window.SEARCH_INDEX[name];
+      if(name.toLowerCase().indexOf(v)>=0||(ph.en&&ph.en.toLowerCase().indexOf(v)>=0)){
+        items.push({name:name,en:ph.en||''});
+      }
+    });
+    if(!items.length){box.style.display='none';return;}
+    box.innerHTML=items.slice(0,6).map(function(it){
+      return '<a href="'+it.name+'/index.html"><span class="ss-name">'+it.name+'</span><span class="ss-en">'+(it.en||'')+'</span></a>';
+    }).join('');
+    box.style.display='block';
+  });
+  document.addEventListener('click',function(e){
+    if(!form.contains(e.target))box.style.display='none';
+  });
+})();
 </script>
 </body>
 </html>
