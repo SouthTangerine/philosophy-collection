@@ -216,13 +216,13 @@ footer p.foot-meta .maker{color:var(--accent-dark);font-weight:600;letter-spacin
 .rel-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
 .rel-links a{display:inline-flex;align-items:baseline;gap:7px;padding:8px 18px;border-radius:22px;background:var(--bg2);border:1px solid var(--line-dim);font-size:.86rem;color:var(--ink);transition:border-color .2s,color .2s,transform .2s;}
 .rel-links a:hover{border-color:var(--accent);color:var(--accent-dark);transform:translateY(-1px);}
-.rel-links a span{font-size:.7rem;color:var(--ink-dim);letter-spacing:.04em;}
+.rel-links a span{font-size:.74rem;color:var(--ink-dim);letter-spacing:.04em;}
 body.dark .rel-links a{background:#2a2a2a;}
 body.dark .rel-links a:hover{border-color:var(--accent-light);}
 @media(max-width:640px){
   .rel-links{gap:8px;}
   .rel-links a{padding:7px 14px;font-size:.8rem;border-radius:18px;}
-  .rel-links a span{font-size:.66rem;}
+  .rel-links a span{font-size:.7rem;}
 }
 
 /* 回到顶部 */
