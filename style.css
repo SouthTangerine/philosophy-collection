@@ -210,6 +210,20 @@ footer{padding:46px 0 36px;text-align:center;border-top:1px solid var(--line-dim
 footer p{font-size:.82rem;color:var(--ink-dim);letter-spacing:.06em;}
 footer p.foot-meta{font-size:.74rem;margin-top:8px;color:var(--ink-dim);opacity:.85;}
 footer p.foot-meta .maker{color:var(--accent-dark);font-weight:600;letter-spacing:.08em;}
+/* 相关哲学家 */
+.related{padding:34px 0 4px;}
+.related h3{font-size:.78rem;color:var(--ink-dim);letter-spacing:.18em;text-align:center;margin-bottom:16px;font-weight:600;}
+.rel-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+.rel-links a{display:inline-flex;align-items:baseline;gap:7px;padding:8px 18px;border-radius:22px;background:var(--bg2);border:1px solid var(--line-dim);font-size:.86rem;color:var(--ink);transition:border-color .2s,color .2s,transform .2s;}
+.rel-links a:hover{border-color:var(--accent);color:var(--accent-dark);transform:translateY(-1px);}
+.rel-links a span{font-size:.7rem;color:var(--ink-dim);letter-spacing:.04em;}
+body.dark .rel-links a{background:#2a2a2a;}
+body.dark .rel-links a:hover{border-color:var(--accent-light);}
+@media(max-width:640px){
+  .rel-links{gap:8px;}
+  .rel-links a{padding:7px 14px;font-size:.8rem;border-radius:18px;}
+  .rel-links a span{font-size:.66rem;}
+}
 
 /* 回到顶部 */
 .to-top{position:fixed;right:26px;bottom:30px;width:44px;height:44px;background:var(--accent);color:var(--bg);border:none;border-radius:6px;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s;z-index:60;}
