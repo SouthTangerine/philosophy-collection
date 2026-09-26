@@ -70,6 +70,31 @@ nav.top .drop-menu a em{font-size:.7rem;color:var(--ink-dim);font-style:normal;l
   nav.top .drop-menu a em{display:none;}
   nav.top .drop-btn::after{content:"·";opacity:.5;}
 }
+/* 门户时间线：垂直线性轴（覆盖 style.css 中 .tl-item 子页面样式） */
+.tl-list{position:relative;margin:26px 0 8px;}
+.tl-list::before{content:"";position:absolute;left:164px;top:4px;bottom:4px;width:2px;background:var(--line);}
+.tl-list .tl-item{position:relative;display:grid;grid-template-columns:120px 46px 1fr;gap:0 22px;align-items:center;margin:0 0 22px;padding:0;}
+.tl-list .tl-item::before{content:none;display:none;}
+.tl-list .tl-item .tl-year{display:block;text-align:right;font-size:.78rem;font-weight:400;color:var(--ink-dim);letter-spacing:.05em;line-height:1.5;white-space:nowrap;margin:0;}
+.tl-node{position:relative;z-index:1;width:46px;height:46px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 5px var(--bg);}
+.tl-node a{display:block;width:38px;height:38px;border-radius:50%;}
+.tl-node img{width:38px;height:38px;border-radius:50%;object-fit:cover;display:block;filter:sepia(.12) saturate(.92) contrast(1.02);}
+.tl-body{display:block;text-decoration:none;color:inherit;background:var(--bg2);border:1px solid var(--line-dim);border-radius:10px;padding:13px 20px;transition:background .25s,border-color .25s,transform .25s;}
+.tl-body:hover{background:#eeeee8;border-color:var(--line);transform:translateY(-2px);}
+.tl-body h3{font-size:1.02rem;font-weight:800;color:var(--ink);letter-spacing:.02em;line-height:1.4;}
+.tl-body h3 em{font-style:italic;font-size:.76rem;font-weight:400;color:var(--ink-dim);margin-left:8px;letter-spacing:0;}
+.tl-body p{font-size:.85rem;color:var(--ink-soft);line-height:1.7;margin-top:3px;}
+body.dark .tl-body:hover{background:#333;border-color:var(--line);}
+@media(max-width:640px){
+  .tl-list::before{left:21px;top:4px;bottom:4px;}
+  .tl-list .tl-item{grid-template-columns:44px 1fr;gap:0 14px;margin-bottom:18px;}
+  .tl-list .tl-item .tl-year{grid-column:1/-1;text-align:left;padding:0 0 3px 58px;font-size:.72rem;color:var(--ink-dim);}
+  .tl-node{width:44px;height:44px;box-shadow:0 0 0 4px var(--bg);}
+  .tl-node a{width:36px;height:36px;}
+  .tl-node img{width:36px;height:36px;}
+  .tl-body{padding:12px 16px;}
+  .tl-body h3{font-size:.96rem;}
+}
 </style>
 </head>
 <body>
@@ -165,7 +190,7 @@ nav.top .drop-menu a em{font-size:.7rem;color:var(--ink-dim);font-style:normal;l
 <header class="hero">
   <div class="wrap">
     <div class="eyebrow">PHILOSOPHIA</div>
-    <h1>Philosophia · 爱智慧</h1>
+    <h1>Philosophia</h1>
     <p class="sub">从泰勒斯的水到德里达的延异——四十位思想家，横跨两千六百年，覆盖古希腊哲学、希腊化哲学、中世纪哲学、近代理性与经验主义、德国古典哲学、意志哲学、存在主义、现象学、分析哲学、结构主义与后结构主义。每位哲学家均含核心概念、著作导读、生平时代与名言术语四个维度。</p>
     <div class="overview">
       <div class="ov-card"><b>40</b><span>位哲学家</span></div>
@@ -177,579 +202,419 @@ nav.top .drop-menu a em{font-size:.7rem;color:var(--ink-dim);font-style:normal;l
 
 <section class="sec reveal" id="sec-grk">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="dot"></span>
-      <h2>古希腊 · 本原与理性</h2>
-      <span class="span">九位奠基者</span>
-    </div>
-    <p class="sec-desc">从米利都到雅典，古希腊哲学确立了西方思想的基本问题：本原是什么？存在如何显现？人应该如何生活？泰勒斯追问水，赫拉克利特看见火，巴门尼德守住"存在"，柏拉图划分两个世界，亚里士多德则以逻辑与四因给知识立下法庭——一切后世哲学都是对这些问题的重新回应。</p>
-    <div class="portal-grid">
-      <a class="p-card" data-school="古希腊" href="泰勒斯/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/泰勒斯.jpg" alt="泰勒斯" loading="lazy">
-          <div class="pc-id">
-            <h3>泰勒斯</h3>
-            <div class="pc-en">Thales</div>
-          </div>
-        </div>
-        <div class="pc-era">约前624 — 前546 · 米利都</div>
-        <div class="pc-desc">"水是万物的本原"——西方哲学的第一人。首次以自然而非神话解释世界，开启了米利都学派的理性追问。</div>
-        <div class="pc-tag">米利都学派</div><span class="kw" style="display:none">米利都学派 自然哲学</span>
-      </a>
-      <a class="p-card" data-school="古希腊" href="毕达哥拉斯/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/毕达哥拉斯.jpg" alt="毕达哥拉斯" loading="lazy">
-          <div class="pc-id">
-            <h3>毕达哥拉斯</h3>
-            <div class="pc-en">Pythagoras</div>
-          </div>
-        </div>
-        <div class="pc-era">约前570 — 前495 · 萨摩斯/克罗顿</div>
-        <div class="pc-desc">"数即万物的本原"——毕达哥拉斯学派的创立者。以数为宇宙的秩序，将数学、宗教与灵魂学说融为一体。</div>
-        <div class="pc-tag">毕达哥拉斯学派</div><span class="kw" style="display:none">毕达哥拉斯主义 数本原论</span>
-      </a>
-      <a class="p-card" data-school="古希腊" href="赫拉克利特/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/赫拉克利特.jpg" alt="赫拉克利特" loading="lazy">
-          <div class="pc-id">
-            <h3>赫拉克利特</h3>
-            <div class="pc-en">Heraclitus</div>
-          </div>
-        </div>
-        <div class="pc-era">约前535 — 前475 · 以弗所</div>
-        <div class="pc-desc">"万物皆流"——以火为本原的晦涩哲人。他揭示对立统一与逻各斯，为生成与变化确立了思辨的法则。</div>
-        <div class="pc-tag">爱菲斯学派</div><span class="kw" style="display:none">爱菲斯学派 自然哲学 辩证法</span>
-      </a>
-      <a class="p-card" data-school="古希腊" href="巴门尼德/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/巴门尼德.jpg" alt="巴门尼德" loading="lazy">
-          <div class="pc-id">
-            <h3>巴门尼德</h3>
-            <div class="pc-en">Parmenides</div>
-          </div>
-        </div>
-        <div class="pc-era">约前515 — 前450 · 埃利亚</div>
-        <div class="pc-desc">"存在者存在"——埃利亚学派的奠基人。以逻辑之路区分真理与意见，将哲学引向对"存在"本身的沉思。</div>
-        <div class="pc-tag">埃利亚学派</div><span class="kw" style="display:none">埃利亚学派 存在论</span>
-      </a>
-      <a class="p-card" data-school="古希腊" href="普罗泰戈拉/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/普罗泰戈拉.jpg" alt="普罗泰戈拉" loading="lazy">
-          <div class="pc-id">
-            <h3>普罗泰戈拉</h3>
-            <div class="pc-en">Protagoras</div>
-          </div>
-        </div>
-        <div class="pc-era">约前490 — 前420 · 阿布德拉</div>
-        <div class="pc-desc">"人是万物的尺度"——智者派的领袖。将哲学的重心从宇宙转向人与城邦，开教育、修辞与相对主义之先。</div>
-        <div class="pc-tag">智者派</div><span class="kw" style="display:none">智者派 相对主义</span>
-      </a>
-      <a class="p-card" data-school="古希腊" href="德谟克利特/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/德谟克利特.jpg" alt="德谟克利特" loading="lazy">
-          <div class="pc-id">
-            <h3>德谟克利特</h3>
-            <div class="pc-en">Democritus</div>
-          </div>
-        </div>
-        <div class="pc-era">约前460 — 前370 · 阿布德拉</div>
-        <div class="pc-desc">"原子与虚空"——原子论哲学的集大成者。以机械必然性解释一切生成，同时写下最早的快乐主义伦理学。</div>
-        <div class="pc-tag">原子论</div><span class="kw" style="display:none">原子论 自然哲学 快乐主义</span>
-      </a>
-      <a class="p-card" data-school="古希腊" href="苏格拉底/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/苏格拉底.jpg" alt="苏格拉底" loading="lazy">
-          <div class="pc-id">
-            <h3>苏格拉底</h3>
-            <div class="pc-en">Socrates</div>
-          </div>
-        </div>
-        <div class="pc-era">前469 — 前399 · 雅典</div>
-        <div class="pc-desc">"认识你自己"——西方伦理哲学的化身。以诘问法和"无知之知"催生真理，用生命为哲学作了最后的见证。</div>
-        <div class="pc-tag">苏格拉底方法</div><span class="kw" style="display:none">苏格拉底主义 伦理哲学</span>
-      </a>
-      <a class="p-card" data-school="古希腊" href="柏拉图/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/柏拉图.jpg" alt="柏拉图" loading="lazy">
-          <div class="pc-id">
-            <h3>柏拉图</h3>
-            <div class="pc-en">Plato</div>
-          </div>
-        </div>
-        <div class="pc-era">约前428 — 前348 · 雅典</div>
-        <div class="pc-desc">"理念的世界"——西方最伟大的对话哲学家。以洞穴之喻划分可见与可知，以哲人王与爱智者描绘理想城邦。</div>
-        <div class="pc-tag">理念论</div><span class="kw" style="display:none">柏拉图主义 理念论 唯心主义</span>
-      </a>
-      <a class="p-card" data-school="古希腊" href="亚里士多德/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/亚里士多德.jpg" alt="亚里士多德" loading="lazy">
-          <div class="pc-id">
-            <h3>亚里士多德</h3>
-            <div class="pc-en">Aristotle</div>
-          </div>
-        </div>
-        <div class="pc-era">前384 — 前322 · 斯塔吉拉/雅典</div>
-        <div class="pc-desc">"求知是人的本性"——百科全书式的思想家。以四因、实体与中道为后世形而上学、逻辑学与伦理学奠基。</div>
-        <div class="pc-tag">亚里士多德主义</div><span class="kw" style="display:none">亚里士多德主义 形而上学</span>
-      </a>
-    </div>
+  <div class="sec-head">
+    <span class="dot"></span>
+    <h2>古希腊 · 本原与理性</h2>
+    <span class="span">约前624 — 前322</span>
+  </div>
+  <p class="sec-desc">从米利都到雅典，古希腊哲学确立了西方思想的基本问题：本原是什么？存在如何显现？人应该如何生活？泰勒斯追问水，赫拉克利特看见火，巴门尼德守住"存在"，柏拉图划分两个世界，亚里士多德则以逻辑与四因给知识立下法庭——一切后世哲学都是对这些问题的重新回应。</p>
+  <div class="tl-list">
+      <div class="tl-item">
+        <div class="tl-year">约前624 — 前546</div>
+        <div class="tl-node"><a href="泰勒斯/index.html"><img src="images/thumb/泰勒斯.jpg" alt="泰勒斯" loading="lazy"></a></div>
+        <a class="tl-body" href="泰勒斯/index.html">
+          <h3>泰勒斯 <em>Thales</em></h3>
+          <p>"水是万物的本原"——西方哲学的第一人。首次以自然而非神话解释世界，开启了米利都学派的理性追问。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">约前570 — 前495</div>
+        <div class="tl-node"><a href="毕达哥拉斯/index.html"><img src="images/thumb/毕达哥拉斯.jpg" alt="毕达哥拉斯" loading="lazy"></a></div>
+        <a class="tl-body" href="毕达哥拉斯/index.html">
+          <h3>毕达哥拉斯 <em>Pythagoras</em></h3>
+          <p>"数即万物的本原"——毕达哥拉斯学派的创立者。以数为宇宙的秩序，将数学、宗教与灵魂学说融为一体。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">约前535 — 前475</div>
+        <div class="tl-node"><a href="赫拉克利特/index.html"><img src="images/thumb/赫拉克利特.jpg" alt="赫拉克利特" loading="lazy"></a></div>
+        <a class="tl-body" href="赫拉克利特/index.html">
+          <h3>赫拉克利特 <em>Heraclitus</em></h3>
+          <p>"万物皆流"——以火为本原的晦涩哲人。他揭示对立统一与逻各斯，为生成与变化确立了思辨的法则。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">约前515 — 前450</div>
+        <div class="tl-node"><a href="巴门尼德/index.html"><img src="images/thumb/巴门尼德.jpg" alt="巴门尼德" loading="lazy"></a></div>
+        <a class="tl-body" href="巴门尼德/index.html">
+          <h3>巴门尼德 <em>Parmenides</em></h3>
+          <p>"存在者存在"——埃利亚学派的奠基人。以逻辑之路区分真理与意见，将哲学引向对"存在"本身的沉思。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">约前490 — 前420</div>
+        <div class="tl-node"><a href="普罗泰戈拉/index.html"><img src="images/thumb/普罗泰戈拉.jpg" alt="普罗泰戈拉" loading="lazy"></a></div>
+        <a class="tl-body" href="普罗泰戈拉/index.html">
+          <h3>普罗泰戈拉 <em>Protagoras</em></h3>
+          <p>"人是万物的尺度"——智者派的领袖。将哲学的重心从宇宙转向人与城邦，开教育、修辞与相对主义之先。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">前469 — 前399</div>
+        <div class="tl-node"><a href="苏格拉底/index.html"><img src="images/thumb/苏格拉底.jpg" alt="苏格拉底" loading="lazy"></a></div>
+        <a class="tl-body" href="苏格拉底/index.html">
+          <h3>苏格拉底 <em>Socrates</em></h3>
+          <p>"认识你自己"——西方伦理哲学的化身。以诘问法和"无知之知"催生真理，用生命为哲学作了最后的见证。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">约前460 — 前370</div>
+        <div class="tl-node"><a href="德谟克利特/index.html"><img src="images/thumb/德谟克利特.jpg" alt="德谟克利特" loading="lazy"></a></div>
+        <a class="tl-body" href="德谟克利特/index.html">
+          <h3>德谟克利特 <em>Democritus</em></h3>
+          <p>"原子与虚空"——原子论哲学的集大成者。以机械必然性解释一切生成，同时写下最早的快乐主义伦理学。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">约前428 — 前348</div>
+        <div class="tl-node"><a href="柏拉图/index.html"><img src="images/thumb/柏拉图.jpg" alt="柏拉图" loading="lazy"></a></div>
+        <a class="tl-body" href="柏拉图/index.html">
+          <h3>柏拉图 <em>Plato</em></h3>
+          <p>"理念的世界"——西方最伟大的对话哲学家。以洞穴之喻划分可见与可知，以哲人王与爱智者描绘理想城邦。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">前384 — 前322</div>
+        <div class="tl-node"><a href="亚里士多德/index.html"><img src="images/thumb/亚里士多德.jpg" alt="亚里士多德" loading="lazy"></a></div>
+        <a class="tl-body" href="亚里士多德/index.html">
+          <h3>亚里士多德 <em>Aristotle</em></h3>
+          <p>"求知是人的本性"——百科全书式的思想家。以四因、实体与中道为后世形而上学、逻辑学与伦理学奠基。</p>
+        </a>
+      </div>
+  </div>
   </div>
 </section>
 
 <section class="sec reveal" id="sec-hell">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="dot"></span>
-      <h2>希腊化 · 宁静与回归</h2>
-      <span class="span">五位先驱</span>
-    </div>
-    <p class="sec-desc">城邦秩序瓦解之后，希腊化哲学把目光从"公共生活"转向"个体的安宁"。伊壁鸠鲁以快乐疗愈恐惧，芝诺以德性应答命运，皮浪以悬置对抗独断，马可·奥勒留以斯多葛守持皇位，普罗提诺以太一统摄万有——五条道路，皆为后世哲学的源头。</p>
-    <div class="portal-grid">
-      <a class="p-card" data-school="希腊化" href="伊壁鸠鲁/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/伊壁鸠鲁.jpg" alt="伊壁鸠鲁" loading="lazy">
-          <div class="pc-id">
-            <h3>伊壁鸠鲁</h3>
-            <div class="pc-en">Epicurus</div>
-          </div>
-        </div>
-        <div class="pc-era">前341 — 前270 · 萨摩斯/雅典</div>
-        <div class="pc-desc">"死亡与我们无关"——快乐主义的创始人。以原子论奠基，以四重疗法疗愈恐惧，在花园中实践友谊与安宁。</div>
-        <div class="pc-tag">伊壁鸠鲁主义</div><span class="kw" style="display:none">伊壁鸠鲁主义 快乐主义 原子论</span>
-      </a>
-      <a class="p-card" data-school="希腊化" href="芝诺/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/芝诺.jpg" alt="芝诺" loading="lazy">
-          <div class="pc-id">
-            <h3>芝诺</h3>
-            <div class="pc-en">Zeno of Citium</div>
-          </div>
-        </div>
-        <div class="pc-era">约前334 — 前262 · 基提翁/雅典</div>
-        <div class="pc-desc">"依自然而活"——斯多葛学派的创始人。在彩绘柱廊讲学，把理性、德性与宇宙秩序铸为一体，开启延续五百年的传统。</div>
-        <div class="pc-tag">斯多葛</div><span class="kw" style="display:none">斯多葛 斯多葛主义</span>
-      </a>
-      <a class="p-card" data-school="希腊化" href="皮浪/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/皮浪.jpg" alt="皮浪" loading="lazy">
-          <div class="pc-id">
-            <h3>皮浪</h3>
-            <div class="pc-en">Pyrrho</div>
-          </div>
-        </div>
-        <div class="pc-era">约前360 — 前270 · 埃利斯</div>
-        <div class="pc-desc">"悬置判断"——怀疑主义的创始人。不写著作、不立体系，以一生的不动心示范：对一切独断保持开放，由此获得宁静。</div>
-        <div class="pc-tag">怀疑主义</div><span class="kw" style="display:none">怀疑主义 皮浪主义</span>
-      </a>
-      <a class="p-card" data-school="希腊化" href="马可奥勒留/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/马可奥勒留.jpg" alt="马可奥勒留" loading="lazy">
-          <div class="pc-id">
-            <h3>马可·奥勒留</h3>
-            <div class="pc-en">Marcus Aurelius</div>
-          </div>
-        </div>
-        <div class="pc-era">121 — 180 · 罗马</div>
-        <div class="pc-desc">"把每一天当作最后一天"——罗马五贤帝之末。在军营中写下《沉思录》，把斯多葛哲学实践到权力的顶端。</div>
-        <div class="pc-tag">斯多葛</div><span class="kw" style="display:none">斯多葛 斯多葛主义</span>
-      </a>
-      <a class="p-card" data-school="希腊化" href="普罗提诺/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/普罗提诺.jpg" alt="普罗提诺" loading="lazy">
-          <div class="pc-id">
-            <h3>普罗提诺</h3>
-            <div class="pc-en">Plotinus</div>
-          </div>
-        </div>
-        <div class="pc-era">约204 — 270 · 罗马/亚历山大</div>
-        <div class="pc-desc">"灵魂回归太一"——新柏拉图主义的奠基人。以太一、理智、灵魂三层本体构筑流溢—回归体系，深刻塑造了基督教神秘主义。</div>
-        <div class="pc-tag">新柏拉图主义</div><span class="kw" style="display:none">新柏拉图主义 神秘主义</span>
-      </a>
-    </div>
+  <div class="sec-head">
+    <span class="dot"></span>
+    <h2>希腊化 · 宁静与回归</h2>
+    <span class="span">约前341 — 公元180</span>
+  </div>
+  <p class="sec-desc">城邦秩序瓦解之后，希腊化哲学把目光从"公共生活"转向"个体的安宁"。伊壁鸠鲁以快乐疗愈恐惧，芝诺以德性应答命运，皮浪以悬置对抗独断，马可·奥勒留以斯多葛守持皇位，普罗提诺以太一统摄万有——五条道路，皆为后世哲学的源头。</p>
+  <div class="tl-list">
+      <div class="tl-item">
+        <div class="tl-year">约前360 — 前270</div>
+        <div class="tl-node"><a href="皮浪/index.html"><img src="images/thumb/皮浪.jpg" alt="皮浪" loading="lazy"></a></div>
+        <a class="tl-body" href="皮浪/index.html">
+          <h3>皮浪 <em>Pyrrho</em></h3>
+          <p>"悬置判断"——怀疑主义的创始人。不写著作、不立体系，以一生的不动心示范：对一切独断保持开放，由此获得宁静。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">前341 — 前270</div>
+        <div class="tl-node"><a href="伊壁鸠鲁/index.html"><img src="images/thumb/伊壁鸠鲁.jpg" alt="伊壁鸠鲁" loading="lazy"></a></div>
+        <a class="tl-body" href="伊壁鸠鲁/index.html">
+          <h3>伊壁鸠鲁 <em>Epicurus</em></h3>
+          <p>"死亡与我们无关"——快乐主义的创始人。以原子论奠基，以四重疗法疗愈恐惧，在花园中实践友谊与安宁。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">约前334 — 前262</div>
+        <div class="tl-node"><a href="芝诺/index.html"><img src="images/thumb/芝诺.jpg" alt="芝诺" loading="lazy"></a></div>
+        <a class="tl-body" href="芝诺/index.html">
+          <h3>芝诺 <em>Zeno of Citium</em></h3>
+          <p>"依自然而活"——斯多葛学派的创始人。在彩绘柱廊讲学，把理性、德性与宇宙秩序铸为一体，开启延续五百年的传统。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">121 — 180</div>
+        <div class="tl-node"><a href="马可奥勒留/index.html"><img src="images/thumb/马可奥勒留.jpg" alt="马可·奥勒留" loading="lazy"></a></div>
+        <a class="tl-body" href="马可奥勒留/index.html">
+          <h3>马可·奥勒留 <em>Marcus Aurelius</em></h3>
+          <p>"把每一天当作最后一天"——罗马五贤帝之末。在军营中写下《沉思录》，把斯多葛哲学实践到权力的顶端。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">约204 — 270</div>
+        <div class="tl-node"><a href="普罗提诺/index.html"><img src="images/thumb/普罗提诺.jpg" alt="普罗提诺" loading="lazy"></a></div>
+        <a class="tl-body" href="普罗提诺/index.html">
+          <h3>普罗提诺 <em>Plotinus</em></h3>
+          <p>"灵魂回归太一"——新柏拉图主义的奠基人。以太一、理智、灵魂三层本体构筑流溢—回归体系，深刻塑造了基督教神秘主义。</p>
+        </a>
+      </div>
+  </div>
   </div>
 </section>
 
 <section class="sec reveal" id="sec-med">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="dot"></span>
-      <h2>中世纪 · 信仰与理性</h2>
-      <span class="span">三位传承者</span>
-    </div>
-    <p class="sec-desc">信仰的时代并未停止思辨：奥古斯丁在忏悔中证成上帝与时间，阿奎那以经院逻辑为理性与信仰划界又连缀，彼特拉克则重拾罗马古典，预告人文主义的黎明——三段过渡，衔接古代与现代。</p>
-    <div class="portal-grid">
-      <a class="p-card" data-school="中世纪" href="奥古斯丁/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/奥古斯丁.jpg" alt="奥古斯丁" loading="lazy">
-          <div class="pc-id">
-            <h3>奥古斯丁</h3>
-            <div class="pc-en">Augustine of Hippo</div>
-          </div>
-        </div>
-        <div class="pc-era">354 — 430 · 希波</div>
-        <div class="pc-desc">"我们的心不得安息，直到安息于你"——教父哲学的高峰。以《忏悔录》写内在时间，以《上帝之城》重塑历史神学。</div>
-        <div class="pc-tag">教父哲学</div><span class="kw" style="display:none">教父哲学 基督教哲学</span>
-      </a>
-      <a class="p-card" data-school="中世纪" href="阿奎那/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/阿奎那.jpg" alt="阿奎那" loading="lazy">
-          <div class="pc-id">
-            <h3>托马斯·阿奎那</h3>
-            <div class="pc-en">Thomas Aquinas</div>
-          </div>
-        </div>
-        <div class="pc-era">约1225 — 1274 · 意大利/巴黎</div>
-        <div class="pc-desc">"信仰寻求理解"——经院哲学的顶峰。五路证明上帝存在，在理性与启示之间搭起最系统的桥。</div>
-        <div class="pc-tag">经院哲学</div><span class="kw" style="display:none">托马斯主义 经院哲学 天主教哲学</span>
-      </a>
-      <a class="p-card" data-school="中世纪" href="彼特拉克/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/彼特拉克.jpg" alt="彼特拉克" loading="lazy">
-          <div class="pc-id">
-            <h3>彼特拉克</h3>
-            <div class="pc-en">Petrarch</div>
-          </div>
-        </div>
-        <div class="pc-era">1304 — 1374 · 意大利</div>
-        <div class="pc-desc">"人的尊严与荣耀"——人文主义之父。以古典复兴点燃个体自觉，被称为"第一位现代人"。</div>
-        <div class="pc-tag">人文主义</div><span class="kw" style="display:none">人文主义</span>
-      </a>
-    </div>
+  <div class="sec-head">
+    <span class="dot"></span>
+    <h2>中世纪 · 信仰与理性</h2>
+    <span class="span">约354 — 1374</span>
+  </div>
+  <p class="sec-desc">信仰的时代并未停止思辨：奥古斯丁在忏悔中证成上帝与时间，阿奎那以经院逻辑为理性与信仰划界又连缀，彼特拉克则重拾罗马古典，预告人文主义的黎明——三段过渡，衔接古代与现代。</p>
+  <div class="tl-list">
+      <div class="tl-item">
+        <div class="tl-year">354 — 430</div>
+        <div class="tl-node"><a href="奥古斯丁/index.html"><img src="images/thumb/奥古斯丁.jpg" alt="奥古斯丁" loading="lazy"></a></div>
+        <a class="tl-body" href="奥古斯丁/index.html">
+          <h3>奥古斯丁 <em>Augustine of Hippo</em></h3>
+          <p>"我们的心不得安息，直到安息于你"——教父哲学的高峰。以《忏悔录》写内在时间，以《上帝之城》重塑历史神学。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">约1225 — 1274</div>
+        <div class="tl-node"><a href="阿奎那/index.html"><img src="images/thumb/阿奎那.jpg" alt="托马斯·阿奎那" loading="lazy"></a></div>
+        <a class="tl-body" href="阿奎那/index.html">
+          <h3>托马斯·阿奎那 <em>Thomas Aquinas</em></h3>
+          <p>"信仰寻求理解"——经院哲学的顶峰。五路证明上帝存在，在理性与启示之间搭起最系统的桥。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1304 — 1374</div>
+        <div class="tl-node"><a href="彼特拉克/index.html"><img src="images/thumb/彼特拉克.jpg" alt="彼特拉克" loading="lazy"></a></div>
+        <a class="tl-body" href="彼特拉克/index.html">
+          <h3>彼特拉克 <em>Petrarch</em></h3>
+          <p>"人的尊严与荣耀"——人文主义之父。以古典复兴点燃个体自觉，被称为"第一位现代人"。</p>
+        </a>
+      </div>
+  </div>
   </div>
 </section>
 
 <section class="sec reveal" id="sec-mod">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="dot"></span>
-      <h2>近代 · 理性与经验</h2>
-      <span class="span">九位开创者</span>
-    </div>
-    <p class="sec-desc">近代哲学在科学革命与信仰松动的交汇处重估一切：理性主义者从"我思"出发演绎世界，经验主义者从"白板"出发归纳知识，卢梭则在社会契约与公意中追问自由的根源——而康德以批判哲学完成对理性主义与经验主义的综合，为现代主体、现代科学与现代政治划定了边界。</p>
-    <div class="portal-grid">
-      <a class="p-card" data-school="近代" href="培根/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/培根.jpg" alt="培根" loading="lazy">
-          <div class="pc-id">
-            <h3>培根</h3>
-            <div class="pc-en">Francis Bacon</div>
-          </div>
-        </div>
-        <div class="pc-era">1561 — 1626 · 英国</div>
-        <div class="pc-desc">"知识就是力量"——经验主义与科学方法之先声。以四假象说扫除成见，以归纳法重建知识。</div>
-        <div class="pc-tag">经验主义</div><span class="kw" style="display:none">经验主义 科学主义</span>
-      </a>
-      <a class="p-card" data-school="近代" href="笛卡尔/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/笛卡尔.jpg" alt="笛卡尔" loading="lazy">
-          <div class="pc-id">
-            <h3>笛卡尔</h3>
-            <div class="pc-en">René Descartes</div>
-          </div>
-        </div>
-        <div class="pc-era">1596 — 1650 · 法国/荷兰</div>
-        <div class="pc-desc">"我思故我在"——近代哲学的奠基人。以普遍怀疑重寻确定性，开启心物二元论与理性主义传统。</div>
-        <div class="pc-tag">理性主义</div><span class="kw" style="display:none">理性主义 笛卡尔主义</span>
-      </a>
-      <a class="p-card" data-school="近代" href="斯宾诺莎/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/斯宾诺莎.jpg" alt="斯宾诺莎" loading="lazy">
-          <div class="pc-id">
-            <h3>斯宾诺莎</h3>
-            <div class="pc-en">Baruch Spinoza</div>
-          </div>
-        </div>
-        <div class="pc-era">1632 — 1677 · 荷兰</div>
-        <div class="pc-desc">"自由是对必然的认识"——以几何方法写哲学。实体即自然即神，一以贯之的伦理学与政治学。</div>
-        <div class="pc-tag">理性主义</div><span class="kw" style="display:none">理性主义 泛神论</span>
-      </a>
-      <a class="p-card" data-school="近代" href="莱布尼茨/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/莱布尼茨.jpg" alt="莱布尼茨" loading="lazy">
-          <div class="pc-id">
-            <h3>莱布尼茨</h3>
-            <div class="pc-en">Gottfried W. Leibniz</div>
-          </div>
-        </div>
-        <div class="pc-era">1646 — 1716 · 德国</div>
-        <div class="pc-desc">"单子与前定和谐"——单子论与充足理由律的作者。与牛顿同时发明微积分，是"可能世界"思想的源头。</div>
-        <div class="pc-tag">理性主义</div><span class="kw" style="display:none">理性主义 唯心主义</span>
-      </a>
-      <a class="p-card" data-school="近代" href="洛克/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/洛克.jpg" alt="洛克" loading="lazy">
-          <div class="pc-id">
-            <h3>洛克</h3>
-            <div class="pc-en">John Locke</div>
-          </div>
-        </div>
-        <div class="pc-era">1632 — 1704 · 英国</div>
-        <div class="pc-desc">"心灵是一张白纸"——经验主义的奠基人。以《人类理解论》划界知识，以《政府论》确立自然权利。</div>
-        <div class="pc-tag">经验主义</div><span class="kw" style="display:none">经验主义 自由主义</span>
-      </a>
-      <a class="p-card" data-school="近代" href="贝克莱/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/贝克莱.jpg" alt="贝克莱" loading="lazy">
-          <div class="pc-id">
-            <h3>贝克莱</h3>
-            <div class="pc-en">George Berkeley</div>
-          </div>
-        </div>
-        <div class="pc-era">1685 — 1753 · 爱尔兰</div>
-        <div class="pc-desc">"存在即被感知"——以严格的唯心论挑战物质实体，把经验主义推进到神学与观念论的边界。</div>
-        <div class="pc-tag">经验主义</div><span class="kw" style="display:none">经验主义 主观唯心主义</span>
-      </a>
-      <a class="p-card" data-school="近代" href="休谟/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/休谟.jpg" alt="休谟" loading="lazy">
-          <div class="pc-id">
-            <h3>休谟</h3>
-            <div class="pc-en">David Hume</div>
-          </div>
-        </div>
-        <div class="pc-era">1711 — 1776 · 苏格兰</div>
-        <div class="pc-desc">"习惯是人生的伟大指南"——经验主义的极致。对因果性的批判与"休谟问题"，动摇了一切独断知识。</div>
-        <div class="pc-tag">经验主义</div><span class="kw" style="display:none">经验主义 怀疑主义 不可知论</span>
-      </a>
-      <a class="p-card" data-school="近代" href="卢梭/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/卢梭.jpg" alt="卢梭" loading="lazy">
-          <div class="pc-id">
-            <h3>卢梭</h3>
-            <div class="pc-en">Jean-Jacques Rousseau</div>
-          </div>
-        </div>
-        <div class="pc-era">1712 — 1778 · 日内瓦/法国</div>
-        <div class="pc-desc">“人生而自由，却无往不在枷锁之中”——社会契约与公意的提出者，也是浪漫主义与教育革命的先知。</div>
-        <div class="pc-tag">社会契约</div><span class="kw" style="display:none">社会契约 浪漫主义 启蒙主义</span>
-      </a>
-      <a class="p-card" data-school="近代" href="康德/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/康德.jpg" alt="康德" loading="lazy">
-          <div class="pc-id">
-            <h3>康德</h3>
-            <div class="pc-en">Immanuel Kant</div>
-          </div>
-        </div>
-        <div class="pc-era">1724 — 1804 · 柯尼斯堡</div>
-        <div class="pc-desc">“头顶的星空与心中的道德律”——德国古典哲学的奠基人。以哥白尼式革命重构认识论，以绝对命令确立人的尊严，三大批判划定了现代哲学的基本框架。</div>
-        <div class="pc-tag">德国古典哲学</div><span class="kw" style="display:none">德国古典哲学 批判哲学 先验哲学</span>
-      </a>
-    </div>
+  <div class="sec-head">
+    <span class="dot"></span>
+    <h2>近代 · 理性与经验</h2>
+    <span class="span">约1600 — 1728</span>
+  </div>
+  <p class="sec-desc">近代哲学在科学革命与信仰松动的交汇处重估一切：理性主义者从"我思"出发演绎世界，经验主义者从"白板"出发归纳知识，卢梭则在社会契约与公意中追问自由的根源——而康德以批判哲学完成对理性主义与经验主义的综合，为现代主体、现代科学与现代政治划定了边界。</p>
+  <div class="tl-list">
+      <div class="tl-item">
+        <div class="tl-year">1561 — 1626</div>
+        <div class="tl-node"><a href="培根/index.html"><img src="images/thumb/培根.jpg" alt="培根" loading="lazy"></a></div>
+        <a class="tl-body" href="培根/index.html">
+          <h3>培根 <em>Francis Bacon</em></h3>
+          <p>"知识就是力量"——经验主义与科学方法之先声。以四假象说扫除成见，以归纳法重建知识。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1596 — 1650</div>
+        <div class="tl-node"><a href="笛卡尔/index.html"><img src="images/thumb/笛卡尔.jpg" alt="笛卡尔" loading="lazy"></a></div>
+        <a class="tl-body" href="笛卡尔/index.html">
+          <h3>笛卡尔 <em>René Descartes</em></h3>
+          <p>"我思故我在"——近代哲学的奠基人。以普遍怀疑重寻确定性，开启心物二元论与理性主义传统。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1632 — 1677</div>
+        <div class="tl-node"><a href="斯宾诺莎/index.html"><img src="images/thumb/斯宾诺莎.jpg" alt="斯宾诺莎" loading="lazy"></a></div>
+        <a class="tl-body" href="斯宾诺莎/index.html">
+          <h3>斯宾诺莎 <em>Baruch Spinoza</em></h3>
+          <p>"自由是对必然的认识"——以几何方法写哲学。实体即自然即神，一以贯之的伦理学与政治学。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1632 — 1704</div>
+        <div class="tl-node"><a href="洛克/index.html"><img src="images/thumb/洛克.jpg" alt="洛克" loading="lazy"></a></div>
+        <a class="tl-body" href="洛克/index.html">
+          <h3>洛克 <em>John Locke</em></h3>
+          <p>"心灵是一张白纸"——经验主义的奠基人。以《人类理解论》划界知识，以《政府论》确立自然权利。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1646 — 1716</div>
+        <div class="tl-node"><a href="莱布尼茨/index.html"><img src="images/thumb/莱布尼茨.jpg" alt="莱布尼茨" loading="lazy"></a></div>
+        <a class="tl-body" href="莱布尼茨/index.html">
+          <h3>莱布尼茨 <em>Gottfried W. Leibniz</em></h3>
+          <p>"单子与前定和谐"——单子论与充足理由律的作者。与牛顿同时发明微积分，是"可能世界"思想的源头。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1685 — 1753</div>
+        <div class="tl-node"><a href="贝克莱/index.html"><img src="images/thumb/贝克莱.jpg" alt="贝克莱" loading="lazy"></a></div>
+        <a class="tl-body" href="贝克莱/index.html">
+          <h3>贝克莱 <em>George Berkeley</em></h3>
+          <p>"存在即被感知"——以严格的唯心论挑战物质实体，把经验主义推进到神学与观念论的边界。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1711 — 1776</div>
+        <div class="tl-node"><a href="休谟/index.html"><img src="images/thumb/休谟.jpg" alt="休谟" loading="lazy"></a></div>
+        <a class="tl-body" href="休谟/index.html">
+          <h3>休谟 <em>David Hume</em></h3>
+          <p>"习惯是人生的伟大指南"——经验主义的极致。对因果性的批判与"休谟问题"，动摇了一切独断知识。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1712 — 1778</div>
+        <div class="tl-node"><a href="卢梭/index.html"><img src="images/thumb/卢梭.jpg" alt="卢梭" loading="lazy"></a></div>
+        <a class="tl-body" href="卢梭/index.html">
+          <h3>卢梭 <em>Jean-Jacques Rousseau</em></h3>
+          <p>“人生而自由，却无往不在枷锁之中”——社会契约与公意的提出者，也是浪漫主义与教育革命的先知。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1724 — 1804</div>
+        <div class="tl-node"><a href="康德/index.html"><img src="images/thumb/康德.jpg" alt="康德" loading="lazy"></a></div>
+        <a class="tl-body" href="康德/index.html">
+          <h3>康德 <em>Immanuel Kant</em></h3>
+          <p>“头顶的星空与心中的道德律”——德国古典哲学的奠基人。以哥白尼式革命重构认识论，以绝对命令确立人的尊严，三大批判划定了现代哲学的基本框架。</p>
+        </a>
+      </div>
+  </div>
   </div>
 </section>
 
 <section class="sec reveal" id="sec-19">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="dot"></span>
-      <h2>19世纪 · 体系与反叛</h2>
-      <span class="span">六位先驱</span>
-    </div>
-    <p class="sec-desc">十九世纪的哲学从黑格尔的体系大厦中挣脱出来，转向个体、意志、存在与实践。黑格尔以辩证法筑成绝对精神的体系，叔本华打开意志的大门，克尔凯郭尔掘出存在的深渊，马克思揭示历史的物质基础，詹姆斯开创实用主义，尼采宣告上帝之死——六条道路，皆为二十世纪哲学的源头。</p>
-    <div class="portal-grid">
-      <a class="p-card" data-school="19世纪" href="黑格尔/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/黑格尔.jpg" alt="黑格尔" loading="lazy">
-          <div class="pc-id">
-            <h3>黑格尔</h3>
-            <div class="pc-en">G. W. F. Hegel</div>
-          </div>
-        </div>
-        <div class="pc-era">1770 — 1831 · 斯图加特/柏林</div>
-        <div class="pc-desc">“凡是合乎理性的都是现实的”——德国古典哲学的高峰。以辩证法把逻辑、自然与精神铸成一个自我展开的体系，让哲学成为精神对自身的全面认识。</div>
-        <div class="pc-tag">辩证法</div><span class="kw" style="display:none">德国古典哲学 辩证法 绝对精神</span>
-      </a>
-      <a class="p-card" data-school="19世纪" href="叔本华/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/叔本华.jpg" alt="叔本华" loading="lazy">
-          <div class="pc-id">
-            <h3>叔本华</h3>
-            <div class="pc-en">Arthur Schopenhauer</div>
-          </div>
-        </div>
-        <div class="pc-era">1788 — 1860 · 德国</div>
-        <div class="pc-desc">"世界是我的意志"——意志哲学的奠基人。以悲观主义和审美静观开辟了一条通往东方思想与存在主义的道路。</div>
-        <div class="pc-tag">意志哲学</div><span class="kw" style="display:none">唯意志论 悲观主义</span>
-      </a>
-      <a class="p-card" data-school="19世纪" href="克尔凯郭尔/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/克尔凯郭尔.jpg" alt="克尔凯郭尔" loading="lazy">
-          <div class="pc-id">
-            <h3>克尔凯郭尔</h3>
-            <div class="pc-en">Søren Kierkegaard</div>
-          </div>
-        </div>
-        <div class="pc-era">1813 — 1855 · 丹麦</div>
-        <div class="pc-desc">"真理即主体性"——存在主义的先驱。以三个生存阶段和信仰的飞跃，为个体存在的哲学开辟了道路。</div>
-        <div class="pc-tag">存在主义先驱</div><span class="kw" style="display:none">存在主义 信仰主义</span>
-      </a>
-      <a class="p-card" data-school="19世纪" href="马克思/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/马克思.jpg" alt="马克思" loading="lazy">
-          <div class="pc-id">
-            <h3>马克思</h3>
-            <div class="pc-en">Karl Marx</div>
-          </div>
-        </div>
-        <div class="pc-era">1818 — 1883 · 德国</div>
-        <div class="pc-desc">"哲学家们只是解释世界，问题在于改变世界"——历史唯物主义与资本批判的奠基人。</div>
-        <div class="pc-tag">历史唯物主义</div><span class="kw" style="display:none">马克思主义 共产主义 辩证法</span>
-      </a>
-      <a class="p-card" data-school="19世纪" href="詹姆斯/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/詹姆斯.jpg" alt="詹姆斯" loading="lazy">
-          <div class="pc-id">
-            <h3>威廉·詹姆斯</h3>
-            <div class="pc-en">William James</div>
-          </div>
-        </div>
-        <div class="pc-era">1842 — 1910 · 美国</div>
-        <div class="pc-desc">"真理的验证在于它的后果"——实用主义的奠基人，也是现代心理学的开创者。</div>
-        <div class="pc-tag">实用主义</div><span class="kw" style="display:none">实用主义 意识流</span>
-      </a>
-      <a class="p-card" data-school="19世纪" href="尼采/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/尼采.jpg" alt="尼采" loading="lazy">
-          <div class="pc-id">
-            <h3>尼采</h3>
-            <div class="pc-en">Friedrich Nietzsche</div>
-          </div>
-        </div>
-        <div class="pc-era">1844 — 1900 · 德国</div>
-        <div class="pc-desc">"上帝已死"——权力意志、超人、永恒轮回。以锤子做哲学，砸碎旧价值，为新价值的诞生开辟空间。</div>
-        <div class="pc-tag">权力意志</div><span class="kw" style="display:none">唯意志论 虚无主义</span>
-      </a>
-    </div>
+  <div class="sec-head">
+    <span class="dot"></span>
+    <h2>19世纪 · 体系与反叛</h2>
+    <span class="span">约1770 — 1910</span>
+  </div>
+  <p class="sec-desc">十九世纪的哲学从黑格尔的体系大厦中挣脱出来，转向个体、意志、存在与实践。黑格尔以辩证法筑成绝对精神的体系，叔本华打开意志的大门，克尔凯郭尔掘出存在的深渊，马克思揭示历史的物质基础，詹姆斯开创实用主义，尼采宣告上帝之死——六条道路，皆为二十世纪哲学的源头。</p>
+  <div class="tl-list">
+      <div class="tl-item">
+        <div class="tl-year">1770 — 1831</div>
+        <div class="tl-node"><a href="黑格尔/index.html"><img src="images/thumb/黑格尔.jpg" alt="黑格尔" loading="lazy"></a></div>
+        <a class="tl-body" href="黑格尔/index.html">
+          <h3>黑格尔 <em>G. W. F. Hegel</em></h3>
+          <p>“凡是合乎理性的都是现实的”——德国古典哲学的高峰。以辩证法把逻辑、自然与精神铸成一个自我展开的体系，让哲学成为精神对自身的全面认识。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1788 — 1860</div>
+        <div class="tl-node"><a href="叔本华/index.html"><img src="images/thumb/叔本华.jpg" alt="叔本华" loading="lazy"></a></div>
+        <a class="tl-body" href="叔本华/index.html">
+          <h3>叔本华 <em>Arthur Schopenhauer</em></h3>
+          <p>"世界是我的意志"——意志哲学的奠基人。以悲观主义和审美静观开辟了一条通往东方思想与存在主义的道路。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1813 — 1855</div>
+        <div class="tl-node"><a href="克尔凯郭尔/index.html"><img src="images/thumb/克尔凯郭尔.jpg" alt="克尔凯郭尔" loading="lazy"></a></div>
+        <a class="tl-body" href="克尔凯郭尔/index.html">
+          <h3>克尔凯郭尔 <em>Søren Kierkegaard</em></h3>
+          <p>"真理即主体性"——存在主义的先驱。以三个生存阶段和信仰的飞跃，为个体存在的哲学开辟了道路。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1818 — 1883</div>
+        <div class="tl-node"><a href="马克思/index.html"><img src="images/thumb/马克思.jpg" alt="马克思" loading="lazy"></a></div>
+        <a class="tl-body" href="马克思/index.html">
+          <h3>马克思 <em>Karl Marx</em></h3>
+          <p>"哲学家们只是解释世界，问题在于改变世界"——历史唯物主义与资本批判的奠基人。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1842 — 1910</div>
+        <div class="tl-node"><a href="詹姆斯/index.html"><img src="images/thumb/詹姆斯.jpg" alt="威廉·詹姆斯" loading="lazy"></a></div>
+        <a class="tl-body" href="詹姆斯/index.html">
+          <h3>威廉·詹姆斯 <em>William James</em></h3>
+          <p>"真理的验证在于它的后果"——实用主义的奠基人，也是现代心理学的开创者。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1844 — 1900</div>
+        <div class="tl-node"><a href="尼采/index.html"><img src="images/thumb/尼采.jpg" alt="尼采" loading="lazy"></a></div>
+        <a class="tl-body" href="尼采/index.html">
+          <h3>尼采 <em>Friedrich Nietzsche</em></h3>
+          <p>"上帝已死"——权力意志、超人、永恒轮回。以锤子做哲学，砸碎旧价值，为新价值的诞生开辟空间。</p>
+        </a>
+      </div>
+  </div>
   </div>
 </section>
 
 <section class="sec reveal" id="sec-20a">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="dot"></span>
-      <h2>20世纪上半叶 · 现象学与语言转向</h2>
-      <span class="span">四位奠基者</span>
-    </div>
-    <p class="sec-desc">二十世纪哲学经历了两次大转向：现象学转向（回到事物本身）和语言转向（哲学问题归根结底是语言问题）。胡塞尔提供了方法，海德格尔将其引向存在论，罗素开创分析哲学，维特根斯坦则让哲学成为语言的治疗。</p>
-    <div class="portal-grid">
-      <a class="p-card" data-school="20世纪上" href="胡塞尔/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/胡塞尔.jpg" alt="胡塞尔" loading="lazy">
-          <div class="pc-id">
-            <h3>胡塞尔</h3>
-            <div class="pc-en">Edmund Husserl</div>
-          </div>
-        </div>
-        <div class="pc-era">1859 — 1938 · 德国</div>
-        <div class="pc-desc">"回到事物本身"——现象学的创始人。以意向性和现象学还原为方法，为二十世纪欧陆哲学提供了基石。</div>
-        <div class="pc-tag">现象学</div><span class="kw" style="display:none">现象学</span>
-      </a>
-      <a class="p-card" data-school="20世纪上" href="罗素/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/罗素.jpg" alt="罗素" loading="lazy">
-          <div class="pc-id">
-            <h3>罗素</h3>
-            <div class="pc-en">Bertrand Russell</div>
-          </div>
-        </div>
-        <div class="pc-era">1872 — 1970 · 英国</div>
-        <div class="pc-desc">"逻辑是哲学的本质"——分析哲学的奠基人。以逻辑原子论和摹状词理论改变了哲学的面貌。</div>
-        <div class="pc-tag">分析哲学</div><span class="kw" style="display:none">分析哲学 逻辑主义</span>
-      </a>
-      <a class="p-card" data-school="20世纪上" href="海德格尔/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/海德格尔.jpg" alt="海德格尔" loading="lazy">
-          <div class="pc-id">
-            <h3>海德格尔</h3>
-            <div class="pc-en">Martin Heidegger</div>
-          </div>
-        </div>
-        <div class="pc-era">1889 — 1976 · 德国</div>
-        <div class="pc-desc">"语言是存在的家"——此在的基础存在论。从《存在与时间》到技术的追问，重新追问"存在"本身。</div>
-        <div class="pc-tag">存在论</div><span class="kw" style="display:none">存在主义 现象学</span>
-      </a>
-      <a class="p-card" data-school="20世纪上" href="维特根斯坦/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/维特根斯坦.jpg" alt="维特根斯坦" loading="lazy">
-          <div class="pc-id">
-            <h3>维特根斯坦</h3>
-            <div class="pc-en">Ludwig Wittgenstein</div>
-          </div>
-        </div>
-        <div class="pc-era">1889 — 1951 · 奥地利/英国</div>
-        <div class="pc-desc">"凡不可说的，必须保持沉默"——前期图像论与后期语言游戏，一人开创了两种哲学范式。</div>
-        <div class="pc-tag">语言哲学</div><span class="kw" style="display:none">分析哲学 语言哲学</span>
-      </a>
-    </div>
+  <div class="sec-head">
+    <span class="dot"></span>
+    <h2>20世纪上半叶 · 现象学与语言转向</h2>
+    <span class="span">约1850 — 1951</span>
+  </div>
+  <p class="sec-desc">二十世纪哲学经历了两次大转向：现象学转向（回到事物本身）和语言转向（哲学问题归根结底是语言问题）。胡塞尔提供了方法，海德格尔将其引向存在论，罗素开创分析哲学，维特根斯坦则让哲学成为语言的治疗。</p>
+  <div class="tl-list">
+      <div class="tl-item">
+        <div class="tl-year">1859 — 1938</div>
+        <div class="tl-node"><a href="胡塞尔/index.html"><img src="images/thumb/胡塞尔.jpg" alt="胡塞尔" loading="lazy"></a></div>
+        <a class="tl-body" href="胡塞尔/index.html">
+          <h3>胡塞尔 <em>Edmund Husserl</em></h3>
+          <p>"回到事物本身"——现象学的创始人。以意向性和现象学还原为方法，为二十世纪欧陆哲学提供了基石。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1872 — 1970</div>
+        <div class="tl-node"><a href="罗素/index.html"><img src="images/thumb/罗素.jpg" alt="罗素" loading="lazy"></a></div>
+        <a class="tl-body" href="罗素/index.html">
+          <h3>罗素 <em>Bertrand Russell</em></h3>
+          <p>"逻辑是哲学的本质"——分析哲学的奠基人。以逻辑原子论和摹状词理论改变了哲学的面貌。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1889 — 1976</div>
+        <div class="tl-node"><a href="海德格尔/index.html"><img src="images/thumb/海德格尔.jpg" alt="海德格尔" loading="lazy"></a></div>
+        <a class="tl-body" href="海德格尔/index.html">
+          <h3>海德格尔 <em>Martin Heidegger</em></h3>
+          <p>"语言是存在的家"——此在的基础存在论。从《存在与时间》到技术的追问，重新追问"存在"本身。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1889 — 1951</div>
+        <div class="tl-node"><a href="维特根斯坦/index.html"><img src="images/thumb/维特根斯坦.jpg" alt="维特根斯坦" loading="lazy"></a></div>
+        <a class="tl-body" href="维特根斯坦/index.html">
+          <h3>维特根斯坦 <em>Ludwig Wittgenstein</em></h3>
+          <p>"凡不可说的，必须保持沉默"——前期图像论与后期语言游戏，一人开创了两种哲学范式。</p>
+        </a>
+      </div>
+  </div>
   </div>
 </section>
 
 <section class="sec reveal" id="sec-20b">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="dot"></span>
-      <h2>20世纪下半叶 · 存在主义与后结构</h2>
-      <span class="span">四位继承者</span>
-    </div>
-    <p class="sec-desc">战后欧洲，萨特将现象学与存在主义结合，加缪以荒谬和反抗回应时代，福柯揭示权力与知识的交织，德里达则拆解在场的形而上学——四位思想家从不同方向回应了现代性的根本困境。</p>
-    <div class="portal-grid">
-      <a class="p-card" data-school="20世纪下" href="萨特/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/萨特.jpg" alt="萨特" loading="lazy">
-          <div class="pc-id">
-            <h3>萨特</h3>
-            <div class="pc-en">Jean-Paul Sartre</div>
-          </div>
-        </div>
-        <div class="pc-era">1905 — 1980 · 法国</div>
-        <div class="pc-desc">"存在先于本质"——存在主义的核心代表。以自由、责任、介入三轴构建了战后知识分子的精神坐标。</div>
-        <div class="pc-tag">存在主义</div><span class="kw" style="display:none">存在主义 马克思主义</span>
-      </a>
-      <a class="p-card" data-school="20世纪下" href="加缪/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/加缪.jpg" alt="加缪" loading="lazy">
-          <div class="pc-id">
-            <h3>加缪</h3>
-            <div class="pc-en">Albert Camus</div>
-          </div>
-        </div>
-        <div class="pc-era">1913 — 1960 · 法国/阿尔及利亚</div>
-        <div class="pc-desc">"必须想象西西弗是幸福的"——荒谬哲学家。以小说和散文反抗虚无，在阳光与阴影之间寻找人的尊严。</div>
-        <div class="pc-tag">荒谬哲学</div><span class="kw" style="display:none">存在主义 荒谬主义</span>
-      </a>
-      <a class="p-card" data-school="20世纪下" href="福柯/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/福柯.jpg" alt="福柯" loading="lazy">
-          <div class="pc-id">
-            <h3>福柯</h3>
-            <div class="pc-en">Michel Foucault</div>
-          </div>
-        </div>
-        <div class="pc-era">1926 — 1984 · 法国</div>
-        <div class="pc-desc">"权力无处不在"——知识/权力理论的奠基者。以谱系学和考古学方法揭示疯癫、规训与性的历史。</div>
-        <div class="pc-tag">权力/知识</div><span class="kw" style="display:none">后结构主义 结构主义</span>
-      </a>
-      <a class="p-card" data-school="20世纪下" href="德里达/index.html">
-        <div class="pc-head">
-          <img class="p-portrait" src="images/thumb/德里达.jpg" alt="德里达" loading="lazy">
-          <div class="pc-id">
-            <h3>德里达</h3>
-            <div class="pc-en">Jacques Derrida</div>
-          </div>
-        </div>
-        <div class="pc-era">1930 — 2004 · 法国/阿尔及利亚</div>
-        <div class="pc-desc">"延异"——解构主义的创始人。以对在场的拆解和书写的重新思考，动摇了西方形而上学的基础。</div>
-        <div class="pc-tag">解构主义</div><span class="kw" style="display:none">后结构主义 解构主义</span>
-      </a>
-    </div>
+  <div class="sec-head">
+    <span class="dot"></span>
+    <h2>20世纪下半叶 · 存在主义与后结构</h2>
+    <span class="span">约1905 — 1930</span>
+  </div>
+  <p class="sec-desc">战后欧洲，萨特将现象学与存在主义结合，加缪以荒谬和反抗回应时代，福柯揭示权力与知识的交织，德里达则拆解在场的形而上学——四位思想家从不同方向回应了现代性的根本困境。</p>
+  <div class="tl-list">
+      <div class="tl-item">
+        <div class="tl-year">1905 — 1980</div>
+        <div class="tl-node"><a href="萨特/index.html"><img src="images/thumb/萨特.jpg" alt="萨特" loading="lazy"></a></div>
+        <a class="tl-body" href="萨特/index.html">
+          <h3>萨特 <em>Jean-Paul Sartre</em></h3>
+          <p>"存在先于本质"——存在主义的核心代表。以自由、责任、介入三轴构建了战后知识分子的精神坐标。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1913 — 1960</div>
+        <div class="tl-node"><a href="加缪/index.html"><img src="images/thumb/加缪.jpg" alt="加缪" loading="lazy"></a></div>
+        <a class="tl-body" href="加缪/index.html">
+          <h3>加缪 <em>Albert Camus</em></h3>
+          <p>"必须想象西西弗是幸福的"——荒谬哲学家。以小说和散文反抗虚无，在阳光与阴影之间寻找人的尊严。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1926 — 1984</div>
+        <div class="tl-node"><a href="福柯/index.html"><img src="images/thumb/福柯.jpg" alt="福柯" loading="lazy"></a></div>
+        <a class="tl-body" href="福柯/index.html">
+          <h3>福柯 <em>Michel Foucault</em></h3>
+          <p>"权力无处不在"——知识/权力理论的奠基者。以谱系学和考古学方法揭示疯癫、规训与性的历史。</p>
+        </a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1930 — 2004</div>
+        <div class="tl-node"><a href="德里达/index.html"><img src="images/thumb/德里达.jpg" alt="德里达" loading="lazy"></a></div>
+        <a class="tl-body" href="德里达/index.html">
+          <h3>德里达 <em>Jacques Derrida</em></h3>
+          <p>"延异"——解构主义的创始人。以对在场的拆解和书写的重新思考，动摇了西方形而上学的基础。</p>
+        </a>
+      </div>
+  </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <p>Philosophia · 从古希腊到现当代</p>
-    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.3 ｜ 2026-09-25 ｜ 仅供学习交流</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.4 ｜ 2026-09-26 ｜ 仅供学习交流</p>
   </div>
 </footer>
 
