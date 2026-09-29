@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://southtangerine.github.io/philosophy-collection/sitemap.xml

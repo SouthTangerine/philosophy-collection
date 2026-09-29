@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 · 此路不通向智慧 · Philosophia</title>
+<meta name="description" content="页面未找到。返回 Philosophia 主页，或搜索 40 位西方哲学家的核心概念、著作与名言。">
+<style>
+:root{--bg:#faf8f5;--bg2:#f4f1ec;--ink:#2b2b2b;--ink-soft:#5a5a5a;--ink-dim:#8a8a8a;--accent:#5a6b5a;--accent-dark:#3a4a3a;--line:rgba(90,107,90,.18);--line-dim:rgba(90,107,90,.10);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif;background:var(--bg);color:var(--ink);line-height:1.85;-webkit-font-smoothing:antialiased;}
+body.dark{--bg:#1e1e1e;--bg2:#2a2a2a;--ink:#d5d5d5;--ink-soft:#a8a8a8;--ink-dim:#787878;--accent:#7a9a7a;--accent-dark:#9aba9a;--line:rgba(122,154,122,.20);--line-dim:rgba(122,154,122,.12);}
+.wrap{max-width:640px;margin:0 auto;padding:0 28px;}
+main{padding:96px 0 72px;text-align:center;}
+.eyebrow{font-size:.78rem;letter-spacing:.42em;color:var(--accent);text-transform:uppercase;margin-bottom:18px;}
+h1{font-size:2.1rem;font-weight:900;letter-spacing:.08em;margin-bottom:14px;}
+.sub{font-size:.95rem;color:var(--ink-soft);margin-bottom:34px;}
+.btn{display:inline-block;text-decoration:none;padding:10px 30px;border-radius:24px;font-size:.88rem;letter-spacing:.08em;transition:background .2s,color .2s,transform .2s;}
+.btn-main{background:var(--accent);color:var(--bg);}
+.btn-main:hover{background:var(--accent-dark);transform:translateY(-1px);}
+.search-form{display:flex;justify-content:center;gap:8px;max-width:420px;margin:0 auto;}
+.search-form input{background:var(--bg2);border:1px solid var(--line-dim);border-radius:18px;padding:9px 18px;font-size:.86rem;color:var(--ink);flex:1;min-width:0;outline:none;transition:border-color .2s;}
+.search-form input:focus{border-color:var(--accent);}
+.search-form button{background:var(--accent);color:var(--bg);border:none;border-radius:18px;padding:9px 24px;font-size:.82rem;cursor:pointer;letter-spacing:.08em;transition:background .2s;}
+.search-form button:hover{background:var(--accent-dark);}
+.eras{margin-top:46px;}
+.eras p{font-size:.72rem;color:var(--ink-dim);letter-spacing:.18em;margin-bottom:14px;}
+.eras .links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.eras a{font-size:.78rem;color:var(--ink-soft);text-decoration:none;padding:5px 14px;border-radius:4px;background:var(--bg2);transition:background .2s,color .2s;letter-spacing:.04em;}
+.eras a:hover{background:rgba(90,107,90,.12);color:var(--accent-dark);}
+footer{padding:38px 0 30px;text-align:center;border-top:1px solid var(--line-dim);}
+footer p{font-size:.78rem;color:var(--ink-dim);letter-spacing:.06em;}
+footer p.foot-meta{font-size:.74rem;margin-top:8px;opacity:.85;}
+footer .maker{color:var(--accent-dark);font-weight:600;letter-spacing:.08em;}
+@media(max-width:640px){
+  .wrap{padding:0 20px;}
+  main{padding:64px 0 52px;}
+  h1{font-size:1.7rem;}
+}
+</style>
+</head>
+<body>
+
+<main>
+  <div class="wrap">
+    <div class="eyebrow">PHILOSOPHIA</div>
+    <h1>此路不通向智慧</h1>
+    <p class="sub">所寻之页并不存在——也许是命运的安排。<br>让我们回到思想的起点，或循着关键词继续追问。</p>
+    <a class="btn btn-main" id="homeLink" href="#">回到主页</a>
+    <form class="search-form" id="searchForm" action="#" method="get" role="search" style="margin-top:26px;">
+      <input type="search" name="q" placeholder="搜索哲学家、概念、著作…" aria-label="站内搜索">
+      <button type="submit">搜索</button>
+    </form>
+    <div class="eras">
+      <p>沿着时间线出发</p>
+      <div class="links">
+        <a href="#" data-a="sec-grk">古希腊</a>
+        <a href="#" data-a="sec-hell">希腊化</a>
+        <a href="#" data-a="sec-med">中世纪</a>
+        <a href="#" data-a="sec-mod">近代</a>
+        <a href="#" data-a="sec-19">19 世纪</a>
+        <a href="#" data-a="sec-20a">20 世纪上半叶</a>
+        <a href="#" data-a="sec-20b">20 世纪下半叶</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Philosophia · 从古希腊到现当代</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.5 ｜ 2026-09-29 ｜ 仅供学习交流</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  if (localStorage.getItem('philo-dark') === '1') document.body.classList.add('dark');
+  /* GitHub Pages 404 在请求的任意路径下渲染，站点根从当前 pathname 推断 */
+  var m = location.pathname.match(/^(.*\/philosophy-collection\/)/);
+  var base = m ? m[1] : 'https://southtangerine.github.io/philosophy-collection/';
+  document.getElementById('homeLink').href = base + 'index.html';
+  document.getElementById('searchForm').action = base + 'search.html';
+  var links = document.querySelectorAll('.eras a');
+  for (var i = 0; i < links.length; i++) {
+    links[i].href = base + 'index.html#' + links[i].getAttribute('data-a');
+  }
+})();
+</script>
+</body>
+</html>

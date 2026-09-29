@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>站内搜索 · Philosophia</title>
+<meta name="description" content="Philosophia 站内搜索：按中英文姓名、核心概念、著作名检索 40 位哲学家的 200 余页导读内容，支持多关键词组合与近似推荐。">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
@@ -30,9 +31,9 @@ body.dark .search-suggest{background:#2a2a2a;box-shadow:0 6px 24px rgba(0,0,0,.4
 .r-en{font-size:.72rem;color:var(--ink-dim);letter-spacing:.05em;}
 .r-page{font-size:.72rem;color:var(--ink-dim);background:rgba(90,107,90,.08);padding:2px 9px;border-radius:4px;letter-spacing:.06em;}
 .r-title{margin-top:5px;font-size:.9rem;color:var(--ink);line-height:1.7;}
-.r-title b{color:var(--accent-dark);font-weight:700;}
 .r-hits{margin-top:3px;font-size:.78rem;color:var(--ink-dim);line-height:1.7;}
-.r-hits b{color:var(--accent-dark);}
+.r-title mark,.r-hits mark,.r-name mark,.r-en mark{background:rgba(90,107,90,.24);color:inherit;padding:0 3px;border-radius:3px;font-weight:700;}
+body.dark .r-title mark,body.dark .r-hits mark,body.dark .r-name mark,body.dark .r-en mark{background:rgba(122,154,122,.34);}
 .r-exact{margin-top:5px;font-size:.8rem;color:var(--accent);font-weight:600;}
 .suggest-box{margin-top:22px;padding:14px 18px;background:rgba(90,107,90,.07);border-radius:8px;font-size:.86rem;color:var(--ink-soft);line-height:1.8;}
 .suggest-box a{color:var(--accent-dark);margin:0 6px 0 2px;text-decoration:none;border-bottom:1px dashed var(--accent-dark);}
@@ -68,7 +69,7 @@ body.dark .search-suggest{background:#2a2a2a;box-shadow:0 6px 24px rgba(0,0,0,.4
 <footer>
   <div class="wrap">
     <p>Philosophia · 从古希腊到现当代</p>
-    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.4 ｜ 2026-09-26 ｜ 仅供学习交流</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.5 ｜ 2026-09-29 ｜ 仅供学习交流</p>
   </div>
 </footer>
 
@@ -89,13 +90,13 @@ body.dark .search-suggest{background:#2a2a2a;box-shadow:0 6px 24px rgba(0,0,0,.4
 
   function highlight(text, words) {
     var t = esc(text);
-    words.forEach(function (w) {
-      var i = t.toLowerCase().indexOf(w.toLowerCase());
-      if (i >= 0) {
-        t = t.slice(0, i) + '<b>' + t.slice(i, i + w.length) + '</b>' + t.slice(i + w.length);
-      }
-    });
-    return t;
+    var ws = words.filter(Boolean).map(function (w) {
+      return w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }).filter(Boolean);
+    if (!ws.length) return t;
+    var re;
+    try { re = new RegExp('(' + ws.join('|') + ')', 'gi'); } catch (e) { return t; }
+    return t.replace(re, '<mark>$1</mark>');
   }
 
   /* 单词对文本的匹配分：完全相等120 / 开头100 / 包含70 */
@@ -248,8 +249,8 @@ body.dark .search-suggest{background:#2a2a2a;box-shadow:0 6px 24px rgba(0,0,0,.4
       var html2 = '<ul class="result-list">';
       results.forEach(function (r) {
         html2 += '<li><a href="' + r.href + '">';
-        html2 += '<div class="r-top"><span class="r-name">' + esc(r.name) + '</span>' +
-          (r.en ? '<span class="r-en">' + esc(r.en) + '</span>' : '') +
+        html2 += '<div class="r-top"><span class="r-name">' + highlight(r.name, words) + '</span>' +
+          (r.en ? '<span class="r-en">' + highlight(r.en, words) + '</span>' : '') +
           (r.kind === 'exact'
             ? '<span class="r-page">哲学家主页</span>'
             : '<span class="r-page">' + esc(r.page) + '</span>') +
