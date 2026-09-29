@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>著作导读 · 斯宾诺莎哲学导读</title>
 <meta name="description" content="五部关键著作的详细解读——每部含一句话定位、核心论点、结构概要、关键段落精读与阅读建议。斯宾诺莎生前只署名出版一部书，其余皆由友人于1677年整理为《遗作》——其中《伦理学》是唯一的完整体系。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Philosophia">
+<meta property="og:title" content="著作导读 · 斯宾诺莎哲学导读">
+<meta property="og:description" content="五部关键著作的详细解读——每部含一句话定位、核心论点、结构概要、关键段落精读与阅读建议。斯宾诺莎生前只署名出版一部书，其余皆由友人于1677年整理为《遗作》——其中《伦理学》是唯一的完整体系。">
+<meta property="og:url" content="https://southtangerine.github.io/philosophy-collection/%E6%96%AF%E5%AE%BE%E8%AF%BA%E8%8E%8E/works.html">
+<meta property="og:image" content="https://southtangerine.github.io/philosophy-collection/images/%E6%96%AF%E5%AE%BE%E8%AF%BA%E8%8E%8E.jpg">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="icon" href="../favicon.ico">
 <link rel="stylesheet" href="../style.css">
 <style>
 /* 著作区块补充样式 */
@@ -20,6 +27,7 @@
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
 <nav class="top">
   <div class="wrap">
     <a class="brand" href="index.html">斯宾诺莎导读</a>
@@ -411,10 +419,16 @@
     </ul>
   </div>
 </section>
+<nav class="pn-nav" aria-label="哲学家上下位导航">
+  <div class="wrap">
+    <a class="pn-prev" href="../笛卡尔/index.html"><span class="pn-dir">← 上一位</span><span class="pn-name">笛卡尔</span></a>
+    <a class="pn-next" href="../洛克/index.html"><span class="pn-dir">下一位 →</span><span class="pn-name">洛克</span></a>
+  </div>
+</nav>
 <footer>
   <div class="wrap">
     <p>Philosophia · 近代</p>
-    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.5 ｜ 2026-09-29 ｜ 仅供学习交流</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.6 ｜ 2026-09-29 ｜ 仅供学习交流</p>
   </div>
 </footer>
 
@@ -488,6 +502,9 @@ window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add(
     dt.classList.toggle('active',on);localStorage.setItem('philo-dark',on?'1':'0');
   });
 })();
+</script>
+<script>
+(function(){var pb=document.getElementById('progressBar');if(!pb)return;var up=function(){var h=document.documentElement,b=document.body;var max=h.scrollHeight-h.clientHeight;var p=max>0?(h.scrollTop||b.scrollTop)/max*100:0;pb.style.width=p+'%';};window.addEventListener('scroll',up,{passive:true});window.addEventListener('resize',up);up();})();
 </script>
 </body>
 </html>

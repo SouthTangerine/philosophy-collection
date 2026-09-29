@@ -1,12 +1,19 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>站内搜索 · Philosophia</title>
 <meta name="description" content="Philosophia 站内搜索：按中英文姓名、核心概念、著作名检索 40 位哲学家的 200 余页导读内容，支持多关键词组合与近似推荐。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Philosophia">
+<meta property="og:title" content="站内搜索 · Philosophia">
+<meta property="og:description" content="Philosophia 站内搜索：按中英文姓名、核心概念、著作名检索 40 位哲学家的 200 余页导读内容，支持多关键词组合与近似推荐。">
+<meta property="og:url" content="https://southtangerine.github.io/philosophy-collection/search.html">
+<meta property="og:image" content="https://southtangerine.github.io/philosophy-collection/og-banner.png">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" href="favicon.ico">
 <style>
 .search-form{display:flex;align-items:center;gap:8px;flex:1;max-width:340px;justify-content:flex-end;position:relative;}
 .search-form input{background:var(--bg2);border:1px solid var(--line-dim);border-radius:18px;padding:7px 16px;font-size:.84rem;color:var(--ink);width:200px;outline:none;transition:border-color .2s;}
@@ -49,6 +56,7 @@ body.dark .r-title mark,body.dark .r-hits mark,body.dark .r-name mark,body.dark 
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
 <nav class="top">
   <div class="wrap">
     <a class="brand" href="index.html">Philosophia</a>
@@ -69,7 +77,7 @@ body.dark .r-title mark,body.dark .r-hits mark,body.dark .r-name mark,body.dark 
 <footer>
   <div class="wrap">
     <p>Philosophia · 从古希腊到现当代</p>
-    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.5 ｜ 2026-09-29 ｜ 仅供学习交流</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.6 ｜ 2026-09-29 ｜ 仅供学习交流</p>
   </div>
 </footer>
 
@@ -299,6 +307,9 @@ body.dark .r-title mark,body.dark .r-hits mark,body.dark .r-name mark,body.dark 
     if (!form.contains(e.target)) box.style.display = 'none';
   });
 })();
+</script>
+<script>
+(function(){var pb=document.getElementById('progressBar');if(!pb)return;var up=function(){var h=document.documentElement,b=document.body;var max=h.scrollHeight-h.clientHeight;var p=max>0?(h.scrollTop||b.scrollTop)/max*100:0;pb.style.width=p+'%';};window.addEventListener('scroll',up,{passive:true});window.addEventListener('resize',up);up();})();
 </script>
 </body>
 </html>

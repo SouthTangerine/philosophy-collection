@@ -5,11 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>生平时代 · 罗素哲学导读</title>
 <meta name="description" content="罗素的一生横跨九十八年——从维多利亚时代到冷战时代，从数学基础危机到核武器威胁。他的哲学与时代深度交织：逻辑分析回应数学基础危机，和平主义回应世界大战，反核运动回应核威胁。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Philosophia">
+<meta property="og:title" content="生平时代 · 罗素哲学导读">
+<meta property="og:description" content="罗素的一生横跨九十八年——从维多利亚时代到冷战时代，从数学基础危机到核武器威胁。他的哲学与时代深度交织：逻辑分析回应数学基础危机，和平主义回应世界大战，反核运动回应核威胁。">
+<meta property="og:url" content="https://southtangerine.github.io/philosophy-collection/%E7%BD%97%E7%B4%A0/life.html">
+<meta property="og:image" content="https://southtangerine.github.io/philosophy-collection/images/%E7%BD%97%E7%B4%A0.jpg">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="icon" href="../favicon.ico">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
 <nav class="top">
   <div class="wrap">
     <a class="brand" href="index.html">罗素导读</a>
@@ -185,10 +193,16 @@
     </ul>
   </div>
 </section>
+<nav class="pn-nav" aria-label="哲学家上下位导航">
+  <div class="wrap">
+    <a class="pn-prev" href="../胡塞尔/index.html"><span class="pn-dir">← 上一位</span><span class="pn-name">胡塞尔</span></a>
+    <a class="pn-next" href="../海德格尔/index.html"><span class="pn-dir">下一位 →</span><span class="pn-name">海德格尔</span></a>
+  </div>
+</nav>
 <footer>
   <div class="wrap">
     <p>生平时代 · 罗素哲学导读</p>
-    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.5 ｜ 2026-09-29 ｜ 仅供学习交流</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.6 ｜ 2026-09-29 ｜ 仅供学习交流</p>
   </div>
 </footer>
 
@@ -262,6 +276,9 @@ window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add(
     dt.classList.toggle('active',on);localStorage.setItem('philo-dark',on?'1':'0');
   });
 })();
+</script>
+<script>
+(function(){var pb=document.getElementById('progressBar');if(!pb)return;var up=function(){var h=document.documentElement,b=document.body;var max=h.scrollHeight-h.clientHeight;var p=max>0?(h.scrollTop||b.scrollTop)/max*100:0;pb.style.width=p+'%';};window.addEventListener('scroll',up,{passive:true});window.addEventListener('resize',up);up();})();
 </script>
 </body>
 </html>

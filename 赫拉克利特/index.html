@@ -5,11 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>赫拉克利特 · 哲学导读</title>
 <meta name="description" content="以弗所的&quot;晦涩者&quot;。他宣告&quot;万物皆流&quot;，断言斗争与对立是宇宙的节奏，把&quot;逻各斯&quot;（理性）置于万物中心。他的残篇像谜语，却深远地塑造了哲学对变化、矛盾与秩序的理解。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Philosophia">
+<meta property="og:title" content="赫拉克利特 · 哲学导读">
+<meta property="og:description" content="以弗所的&quot;晦涩者&quot;。他宣告&quot;万物皆流&quot;，断言斗争与对立是宇宙的节奏，把&quot;逻各斯&quot;（理性）置于万物中心。他的残篇像谜语，却深远地塑造了哲学对变化、矛盾与秩序的理解。">
+<meta property="og:url" content="https://southtangerine.github.io/philosophy-collection/%E8%B5%AB%E6%8B%89%E5%85%8B%E5%88%A9%E7%89%B9/index.html">
+<meta property="og:image" content="https://southtangerine.github.io/philosophy-collection/images/%E8%B5%AB%E6%8B%89%E5%85%8B%E5%88%A9%E7%89%B9.jpg">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="icon" href="../favicon.ico">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
 <nav class="top"><div class="wrap">
 <a class="brand" href="index.html">赫拉克利特导读</a>
 <ul><li><a href="index.html" class="active">主页</a></li><li><a href="concepts.html">核心概念</a></li><li><a href="works.html">著作导读</a></li><li><a href="life.html">生平时代</a></li><li><a href="reads.html">名言阅读</a></li><li><a href="../index.html">Philosophia</a></li></ul>
@@ -177,8 +185,14 @@
     </ul>
   </div>
 </section>
+<nav class="pn-nav" aria-label="哲学家上下位导航">
+  <div class="wrap">
+    <a class="pn-prev" href="../毕达哥拉斯/index.html"><span class="pn-dir">← 上一位</span><span class="pn-name">毕达哥拉斯</span></a>
+    <a class="pn-next" href="../巴门尼德/index.html"><span class="pn-dir">下一位 →</span><span class="pn-name">巴门尼德</span></a>
+  </div>
+</nav>
 <footer><div class="wrap"><p>Philosophia · 古希腊</p>
-    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.5 ｜ 2026-09-29 ｜ 仅供学习交流</p></div></footer>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.6 ｜ 2026-09-29 ｜ 仅供学习交流</p></div></footer>
 <button class="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <div class="tool-fab" id="tool-fab">
   <button id="font-increase" title="页面放大" aria-label="页面放大">A+</button>
@@ -248,6 +262,9 @@ window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add(
     dt.classList.toggle('active',on);localStorage.setItem('philo-dark',on?'1':'0');
   });
 })();
+</script>
+<script>
+(function(){var pb=document.getElementById('progressBar');if(!pb)return;var up=function(){var h=document.documentElement,b=document.body;var max=h.scrollHeight-h.clientHeight;var p=max>0?(h.scrollTop||b.scrollTop)/max*100:0;pb.style.width=p+'%';};window.addEventListener('scroll',up,{passive:true});window.addEventListener('resize',up);up();})();
 </script>
 </body>
 </html>

@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>克尔凯郭尔 · 哲学导读</title>
 <meta name="description" content="十九世纪丹麦哲学家、神学家，存在主义的先驱。他一生以笔名写作，用文学性的反讽与热诚的信仰对抗黑格尔的庞大体系——&quot;体系&quot;吞没了活生生的个体，而他要把&quot;这一个&quot;人重新交还给自己：不是通过抽象思辨">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Philosophia">
+<meta property="og:title" content="克尔凯郭尔 · 哲学导读">
+<meta property="og:description" content="十九世纪丹麦哲学家、神学家，存在主义的先驱。他一生以笔名写作，用文学性的反讽与热诚的信仰对抗黑格尔的庞大体系——&quot;体系&quot;吞没了活生生的个体，而他要把&quot;这一个&quot;人重新交还给自己：不是通过抽象思辨">
+<meta property="og:url" content="https://southtangerine.github.io/philosophy-collection/%E5%85%8B%E5%B0%94%E5%87%AF%E9%83%AD%E5%B0%94/index.html">
+<meta property="og:image" content="https://southtangerine.github.io/philosophy-collection/images/%E5%85%8B%E5%B0%94%E5%87%AF%E9%83%AD%E5%B0%94.jpg">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="icon" href="../favicon.ico">
 <link rel="stylesheet" href="../style.css">
 <style>
 /* 首页补充：概览统计 */
@@ -22,6 +29,7 @@
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
 <nav class="top">
   <div class="wrap">
     <a class="brand" href="index.html">克尔凯郭尔导读</a>
@@ -206,10 +214,16 @@
     </ul>
   </div>
 </section>
+<nav class="pn-nav" aria-label="哲学家上下位导航">
+  <div class="wrap">
+    <a class="pn-prev" href="../叔本华/index.html"><span class="pn-dir">← 上一位</span><span class="pn-name">叔本华</span></a>
+    <a class="pn-next" href="../马克思/index.html"><span class="pn-dir">下一位 →</span><span class="pn-name">马克思</span></a>
+  </div>
+</nav>
 <footer>
   <div class="wrap">
     <p>克尔凯郭尔 · 哲学导读</p>
-    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.5 ｜ 2026-09-29 ｜ 仅供学习交流</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.6 ｜ 2026-09-29 ｜ 仅供学习交流</p>
   </div>
 </footer>
 
@@ -283,6 +297,9 @@ window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add(
     dt.classList.toggle('active',on);localStorage.setItem('philo-dark',on?'1':'0');
   });
 })();
+</script>
+<script>
+(function(){var pb=document.getElementById('progressBar');if(!pb)return;var up=function(){var h=document.documentElement,b=document.body;var max=h.scrollHeight-h.clientHeight;var p=max>0?(h.scrollTop||b.scrollTop)/max*100:0;pb.style.width=p+'%';};window.addEventListener('scroll',up,{passive:true});window.addEventListener('resize',up);up();})();
 </script>
 </body>
 </html>

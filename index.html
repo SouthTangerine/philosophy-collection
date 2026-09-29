@@ -1,11 +1,18 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Philosophia · 从古希腊到现当代</title>
 <meta name="description" content="Philosophia 哲学知识站：从泰勒斯的水到德里达的延异，40 位思想家、横跨 2600 年的西方哲学地图，每位哲学家含核心概念、著作导读、生平时代与名言阅读四个维度。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Philosophia">
+<meta property="og:title" content="Philosophia · 从古希腊到现当代">
+<meta property="og:description" content="Philosophia 哲学知识站：从泰勒斯的水到德里达的延异，40 位思想家、横跨 2600 年的西方哲学地图，每位哲学家含核心概念、著作导读、生平时代与名言阅读四个维度。">
+<meta property="og:url" content="https://southtangerine.github.io/philosophy-collection/index.html">
+<meta property="og:image" content="https://southtangerine.github.io/philosophy-collection/og-banner.png">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" href="favicon.ico">
 <link rel="stylesheet" href="style.css">
 <style>
 .portal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin:24px 0;}
@@ -100,6 +107,7 @@ body.dark .tl-body:hover{background:#333;border-color:var(--line);}
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
 <nav class="top">
   <div class="wrap">
     <a class="brand" href="index.html">Philosophia</a>
@@ -197,6 +205,9 @@ body.dark .tl-body:hover{background:#333;border-color:var(--line);}
       <div class="ov-card"><b>40</b><span>位哲学家</span></div>
       <div class="ov-card"><b>200</b><span>页内容</span></div>
       <div class="ov-card"><b>26</b><span>个世纪</span></div>
+    </div>
+<div class="fortune">
+      <button class="btn-fortune" id="fortuneBtn" onclick="fortuneOpen()">随手翻开 · 让命运决定你遇见谁</button>
     </div>
   </div>
 </header>
@@ -615,7 +626,7 @@ body.dark .tl-body:hover{background:#333;border-color:var(--line);}
 <footer>
   <div class="wrap">
     <p>Philosophia · 从古希腊到现当代</p>
-    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.5 ｜ 2026-09-29 ｜ 仅供学习交流</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.6 ｜ 2026-09-29 ｜ 仅供学习交流</p>
   </div>
 </footer>
 
@@ -736,6 +747,12 @@ document.addEventListener('click',function(e){
     if(!form.contains(e.target))box.style.display='none';
   });
 })();
+</script>
+<script>
+(function(){var pb=document.getElementById('progressBar');if(!pb)return;var up=function(){var h=document.documentElement,b=document.body;var max=h.scrollHeight-h.clientHeight;var p=max>0?(h.scrollTop||b.scrollTop)/max*100:0;pb.style.width=p+'%';};window.addEventListener('scroll',up,{passive:true});window.addEventListener('resize',up);up();})();
+</script>
+<script>
+function fortuneOpen(){var a=document.querySelectorAll('.tl-item .tl-node a');if(!a.length)return;location.href=a[Math.floor(Math.random()*a.length)].getAttribute('href');}
 </script>
 </body>
 </html>

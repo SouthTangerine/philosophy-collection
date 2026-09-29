@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>莱布尼茨 · 哲学导读</title>
 <meta name="description" content="&quot;百科全书式&quot;的德国哲学家：单子论、前定和谐、充足理由律、可能世界——他用一个精密的理性体系为宇宙写下说明书；同时他又是微积分的发明者之一、二进制的先驱、欧洲与中国思想交流的推动者。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Philosophia">
+<meta property="og:title" content="莱布尼茨 · 哲学导读">
+<meta property="og:description" content="&quot;百科全书式&quot;的德国哲学家：单子论、前定和谐、充足理由律、可能世界——他用一个精密的理性体系为宇宙写下说明书；同时他又是微积分的发明者之一、二进制的先驱、欧洲与中国思想交流的推动者。">
+<meta property="og:url" content="https://southtangerine.github.io/philosophy-collection/%E8%8E%B1%E5%B8%83%E5%B0%BC%E8%8C%A8/index.html">
+<meta property="og:image" content="https://southtangerine.github.io/philosophy-collection/images/%E8%8E%B1%E5%B8%83%E5%B0%BC%E8%8C%A8.jpg">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="icon" href="../favicon.ico">
 <link rel="stylesheet" href="../style.css">
 <style>
 /* 首页补充：概览统计 */
@@ -22,6 +29,7 @@
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
 <nav class="top">
   <div class="wrap">
     <a class="brand" href="index.html">莱布尼茨导读</a>
@@ -213,10 +221,16 @@
     </ul>
   </div>
 </section>
+<nav class="pn-nav" aria-label="哲学家上下位导航">
+  <div class="wrap">
+    <a class="pn-prev" href="../洛克/index.html"><span class="pn-dir">← 上一位</span><span class="pn-name">洛克</span></a>
+    <a class="pn-next" href="../贝克莱/index.html"><span class="pn-dir">下一位 →</span><span class="pn-name">贝克莱</span></a>
+  </div>
+</nav>
 <footer>
   <div class="wrap">
     <p>Philosophia · 近代</p>
-    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.5 ｜ 2026-09-29 ｜ 仅供学习交流</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.6 ｜ 2026-09-29 ｜ 仅供学习交流</p>
   </div>
 </footer>
 
@@ -290,6 +304,9 @@ window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add(
     dt.classList.toggle('active',on);localStorage.setItem('philo-dark',on?'1':'0');
   });
 })();
+</script>
+<script>
+(function(){var pb=document.getElementById('progressBar');if(!pb)return;var up=function(){var h=document.documentElement,b=document.body;var max=h.scrollHeight-h.clientHeight;var p=max>0?(h.scrollTop||b.scrollTop)/max*100:0;pb.style.width=p+'%';};window.addEventListener('scroll',up,{passive:true});window.addEventListener('resize',up);up();})();
 </script>
 </body>
 </html>
