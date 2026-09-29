@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日一思 · Philosophia</title>
+<meta name="description" content="每日一思：一个生活情境、四个选项——你的判断，更接近哪位哲学家的思想？Philosophia 每日哲学思考。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Philosophia">
+<meta property="og:title" content="每日一思 · Philosophia">
+<meta property="og:description" content="一个哲学情境，四个选项——你的判断，接近哪位哲学家的思想？">
+<meta property="og:url" content="https://southtangerine.github.io/philosophy-collection/daily.html">
+<meta property="og:image" content="https://southtangerine.github.io/philosophy-collection/og-banner.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="style.css">
+<script src="daily-quiz.js"></script>
+<style>
+.daily-main{min-height:66vh;padding:64px 0 40px;}
+.daily-main .wrap{max-width:700px;}
+.daily-eyebrow{font-size:.72rem;letter-spacing:.34em;color:var(--accent);text-transform:uppercase;margin-bottom:14px;}
+.daily-title{font-size:clamp(1.6rem,4vw,2.1rem);font-weight:900;color:var(--ink);letter-spacing:.06em;line-height:1.4;}
+.daily-sub{font-size:.86rem;color:var(--ink-soft);line-height:1.85;margin-top:10px;max-width:560px;}
+.daily-quiz-wrap{margin-top:30px;}
+.quiz{margin-top:0;max-width:660px;margin-left:auto;margin-right:auto;}
+.quiz-result-body h4{font-size:.95rem;}
+.quiz-result-body p{font-size:.87rem;}
+.daily-note{margin-top:26px;text-align:center;font-size:.74rem;color:var(--ink-dim);letter-spacing:.08em;line-height:1.9;}
+.daily-note a{color:var(--accent-dark);text-decoration:none;border-bottom:1px dashed var(--accent-dark);}
+@media (max-width:640px){
+  .daily-main{padding:44px 0 30px;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Philosophia</a>
+    <ul>
+      <li><a href="index.html">主页</a></li>
+      <li><a href="index.html#sec-grk">时间线</a></li>
+      <li><a href="search.html">搜索</a></li>
+      <li><a href="daily.html" class="active">每日一思</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="daily-main">
+  <div class="wrap">
+    <div class="daily-eyebrow">PHILOSOPHIA · DAILY</div>
+    <h1 class="daily-title">每日一思</h1>
+    <p class="daily-sub">一个日常情境，四个选项——你的直觉判断，其实站在某位哲学家的肩膀上。选一个答案，看看你与谁同行；明天再来，遇见另一位思想家。</p>
+    <div class="daily-quiz-wrap">
+      <div class="quiz" id="dailyQuiz" role="region" aria-label="每日一思"></div>
+    </div>
+    <p class="daily-note">题库共 40 题，覆盖站内 40 位哲学家，<a href="index.html">回到主页</a> 可沿时间线阅读他们的完整导读。</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Philosophia · 从古希腊到现当代</p>
+    <p class="foot-meta">制作：<span class="maker">淮南有个橘</span> ｜ v2.7 ｜ 2026-09-29 ｜ 仅供学习交流</p>
+  </div>
+</footer>
+
+<button class="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="tool-fab" id="tool-fab">
+  <button id="font-increase" title="页面放大" aria-label="页面放大">A+</button>
+  <button id="font-decrease" title="页面缩小" aria-label="页面缩小">A−</button>
+  <button id="dark-toggle" title="暗黑模式" aria-label="切换暗黑模式">◐</button>
+</div>
+
+<script>
+/* 每日一思：按日期轮换 + 当日固定洗牌 + localStorage 记忆 */
+(function(){
+  var box=document.getElementById('dailyQuiz');
+  if(!box||typeof DAILY_QUIZ==='undefined'||!DAILY_QUIZ.length)return;
+  var now=new Date();
+  var day=Math.floor((now-now.getTimezoneOffset()*60000)/864e5);
+  var quiz=DAILY_QUIZ[((day%DAILY_QUIZ.length)+DAILY_QUIZ.length)%DAILY_QUIZ.length];
+  var lsKey='philo-quiz-'+day;
+  var chosen=null;
+  try{chosen=localStorage.getItem(lsKey);}catch(e){}
+  var seed=day%2147483647;
+  function rnd(){seed=(seed*48271)%2147483647;return seed/2147483647;}
+  var order=quiz.o.map(function(_,i){return i;});
+  for(var i=order.length-1;i>0;i--){var j=Math.floor(rnd()*(i+1));var t=order[i];order[i]=order[j];order[j]=t;}
+  var dateLabel=(now.getMonth()+1)+' 月 '+now.getDate()+' 日';
+  var esc=function(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+  function render(selIdx){
+    var html='<div class="quiz-label">今日一问 · '+dateLabel+'</div>'
+      +'<div class="quiz-q">'+esc(quiz.q)+'</div>'
+      +'<div class="quiz-opts">';
+    for(var k=0;k<order.length;k++){
+      var oi=order[k];var o=quiz.o[oi];
+      var cls='quiz-opt'+(selIdx===null?'':(selIdx===oi?' chosen':' quiz-opt-done'));
+      html+='<button type="button" class="'+cls+'" data-i="'+oi+'"'+(selIdx!==null?' disabled':'')+'>'+esc(o.t)+'</button>';
+    }
+    html+='</div>';
+    if(selIdx!==null){
+      var o=quiz.o[selIdx];
+      html+='<div class="quiz-result">'
+        +'<img src="images/thumb/'+encodeURIComponent(o.p)+'.jpg" alt="'+esc(o.p)+'" loading="lazy">'
+        +'<div class="quiz-result-body"><h4>你的判断，接近 '+esc(o.p)+' 的思想</h4>'
+        +'<p>'+esc(o.d)+'</p>'
+        +'<a href="'+encodeURIComponent(o.p)+'/index.html">阅读 '+esc(o.p)+' 的完整导读 →</a>'
+        +'</div></div>'
+        +'<div class="quiz-foot"><button type="button" class="quiz-redo" id="quizRedo">重新作答</button><span>明天换一题</span></div>';
+    }else{
+      html+='<div class="quiz-foot"><span>选一位哲学家，看看你与谁同行</span></div>';
+    }
+    box.innerHTML=html;
+    var btns=box.querySelectorAll('.quiz-opt');
+    for(var b=0;b<btns.length;b++){
+      btns[b].addEventListener('click',function(){
+        var idx=parseInt(this.getAttribute('data-i'),10);
+        try{localStorage.setItem(lsKey,idx);}catch(e){}
+        render(idx);
+      });
+    }
+    var redo=document.getElementById('quizRedo');
+    if(redo){
+      redo.addEventListener('click',function(){
+        try{localStorage.removeItem(lsKey);}catch(e){}
+        render(null);
+      });
+    }
+  }
+  render(chosen===null?null:parseInt(chosen,10));
+})();
+</script>
+<script>
+const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const toTop=document.querySelector('.to-top');
+window.addEventListener('scroll',()=>{if(window.scrollY>400)toTop.classList.add('show');else toTop.classList.remove('show');});
+(function(){
+  var fab=document.getElementById('tool-fab');
+  if(!fab)return;
+  var btns=fab.querySelectorAll('button');
+  btns.forEach(function(b){b.classList.add('show');});
+  var toTopBtn=document.querySelector('.to-top');
+  if(toTopBtn){
+    window.addEventListener('scroll',function(){if(window.scrollY>400)toTopBtn.classList.add('show');else toTopBtn.classList.remove('show');});
+  }
+  var zoomLevel=100;
+  var html=document.documentElement;
+  var fabEl=document.getElementById('tool-fab');
+  var toTop=document.querySelector('.to-top');
+  var ZOOM_STEPS=[75,100,125,150];
+  function applyZoom(){
+    html.style.zoom=zoomLevel+'%';
+    var rev=(100/zoomLevel*100).toFixed(2)+'%';
+    if(fabEl)fabEl.style.zoom=rev;
+    if(toTop)toTop.style.zoom=rev;
+    document.body.classList.toggle('zoomed',zoomLevel>100);
+  }
+  var saved=localStorage.getItem('philo-zoom');
+  if(saved){zoomLevel=parseInt(saved);applyZoom();}
+  document.getElementById('font-increase').addEventListener('click',function(){
+    var idx=ZOOM_STEPS.indexOf(zoomLevel);
+    if(idx<ZOOM_STEPS.length-1){zoomLevel=ZOOM_STEPS[idx+1];applyZoom();localStorage.setItem('philo-zoom',zoomLevel);}
+  });
+  document.getElementById('font-decrease').addEventListener('click',function(){
+    var idx=ZOOM_STEPS.indexOf(zoomLevel);
+    if(idx>0){zoomLevel=ZOOM_STEPS[idx-1];applyZoom();localStorage.setItem('philo-zoom',zoomLevel);}
+  });
+  var dt=document.getElementById('dark-toggle');
+  if(localStorage.getItem('philo-dark')==='1'){document.body.classList.add('dark');dt.classList.add('active');}
+  dt.addEventListener('click',function(){
+    document.body.classList.toggle('dark');var on=document.body.classList.contains('dark');
+    dt.classList.toggle('active',on);localStorage.setItem('philo-dark',on?'1':'0');
+  });
+})();
+</script>
+</body>
+</html>
